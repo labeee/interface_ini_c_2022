@@ -818,7 +818,7 @@ function classificar(){
     classificacao_ed = 'Zero'
     window.alert(mensagem_ventilado)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/classZero.svg'
+    document.getElementById('img_envoltoria').src = '../img/classZero.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
@@ -826,13 +826,13 @@ function classificar(){
     classificacao_ed = 'Zero'
     window.alert(mensagem_cargas)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/classZero.svg'
+    document.getElementById('img_envoltoria').src = '../img/classZero.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
   else {
     document.getElementById('carga_envoltoria').innerHTML = cargas_real + ' kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/class'+classificacao_envoltoria+'.svg'
+    document.getElementById('img_envoltoria').src = '../img/class'+classificacao_envoltoria+'.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP)+' %'
   }
   
@@ -843,20 +843,20 @@ function classificar(){
     window.alert('Verifique se foram calculadas e preenchidas todas as cargas térmicas e consumos de condicionamento!')
     classificacao_ed = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
-    document.getElementById('img_ac').src = 'img/classZero.svg'
+    document.getElementById('img_ac').src = '../img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   else if (classificacao_sistema_ac == 'erro'){
     window.alert(mensagem_ac)
     classificacao_ed = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
-    document.getElementById('img_ac').src = 'img/classZero.svg'
+    document.getElementById('img_ac').src = '../img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   
   else{
     document.getElementById('consumo_ac').innerHTML = Math.round(consumo_ac_real*1.6) + ' kWh/ano' 
-    document.getElementById('img_ac').src = 'img/class'+classificacao_sistema_ac+'.svg'
+    document.getElementById('img_ac').src = '../img/class'+classificacao_sistema_ac+'.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_ac)+' %'
   }
 
@@ -874,13 +874,13 @@ function classificar(){
   if (mensagem_ilum != ''){
     window.alert(mensagem_ilum)
     document.getElementById('consumo_iluminacao').innerHTML = ' - kWh/ano' 
-    document.getElementById('img_iluminacao').src = 'img/class'+classificacao_ilum+'.svg'
+    document.getElementById('img_iluminacao').src = '../img/class'+classificacao_ilum+'.svg'
     document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
   else{
     document.getElementById('consumo_iluminacao').innerHTML = ilum_real*1.6 + ' kWh/ano' 
-    document.getElementById('img_iluminacao').src = 'img/class'+classificacao_ilum+'.svg'
+    document.getElementById('img_iluminacao').src = '../img/class'+classificacao_ilum+'.svg'
     document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_iluminacao)+' %'
   }
 
@@ -896,12 +896,12 @@ function classificar(){
   if (mensagem_aq  != ''){
     window.alert(mensagem_aq)
     document.getElementById('consumo_aq').innerHTML = '- kWh/ano' 
-    document.getElementById('img_aq').src = 'img/class'+classificacao_sistema_aq+'.svg'
+    document.getElementById('img_aq').src = '../img/class'+classificacao_sistema_aq+'.svg'
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   else{
     document.getElementById('consumo_aq').innerHTML = aq_real + ' kWh/ano' 
-    document.getElementById('img_aq').src = 'img/class'+classificacao_sistema_aq+'.svg'
+    document.getElementById('img_aq').src = '../img/class'+classificacao_sistema_aq+'.svg'
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_aq)+' %'
   }
 
@@ -910,13 +910,13 @@ function classificar(){
   if (classificacao_ed == 'erro'){
     window.alert('Existe algum erro na compilação do consumo total da edificação, verifique o preenchimento de todos os sistemas')
     document.getElementById('consumo_geral').innerHTML = '- kWh/ano' 
-    document.getElementById('img_geral').src = 'img/classZero.svg'
+    document.getElementById('img_geral').src = '../img/classZero.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
   else{
     document.getElementById('consumo_geral').innerHTML = Math.round(CEPreal) + ' kWh/ano' 
-    document.getElementById('img_geral').src = 'img/class'+classificacao_ed+'.svg'
+    document.getElementById('img_geral').src = '../img/class'+classificacao_ed+'.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP_geral)+' %'
   }
   
