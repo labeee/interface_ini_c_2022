@@ -294,7 +294,7 @@ function GetTableFromExcel(data) {
                     //nos que tem select aplicar o filtro   
                     cell1.innerHTML = '<input id="lista_pavimentos'+indice_linha+'" type="text" value='+linha[0]+'>'; // criar função ? ou deixar como input?
                     cell2.innerHTML = '<input id="nome_zona'+indice_linha+'" type="text" value='+linha[1]+'>';
-                    cell3.innerHTML = '<input id="area_zona'+indice_linha+'" type="number" value='+linha[2]+' min="0">';
+                    cell3.innerHTML = '<input id="area_zona'+indice_linha+'" type="number" value='+linha[2]+' min="0" max="10000">';
                     cell4.innerHTML = '<input id="pd_zona'+indice_linha+'" type="number" value='+linha[3]+' min="2.6" max="6.6">';
                     cell5.innerHTML = '<select id="orientacoes'+(indice_linha)+'"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>'
                     orientacoes_preencher.push(linha[4])
