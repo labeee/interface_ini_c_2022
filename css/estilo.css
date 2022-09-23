@@ -37,7 +37,7 @@
 }
 
 #img_header {
-    background:url(img/pbe_logo.png);
+    background:url(../img/pbe_logo.png);
     background-size: cover;
     background-color: #FFFFFF;
     margin-left: 5vh;
