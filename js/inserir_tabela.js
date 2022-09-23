@@ -63,7 +63,7 @@ function inserir_tabela() {
 
     cell1.innerHTML = '<input id="lista_pavimentos'+(rowCount)+'" type="text">'; //colocar como select?
     cell2.innerHTML = '<input id="nome_zona'+rowCount+'" type="text" value="zona '+rowCount+'">';
-    cell3.innerHTML = '<input id="area_zona'+rowCount+'" type="number" min="0">';
+    cell3.innerHTML = '<input id="area_zona'+rowCount+'" type="number" min="0" max="10000">';
     cell4.innerHTML = '<input id="pd_zona'+rowCount+'" type="number" min="2.6" max="6.6">';
     cell5.innerHTML = '<select id="orientacoes'+rowCount+'"type="text"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>';
     cell6.innerHTML = '<select id="tipo_zona'+rowCount+'"><option value="Perimetral">Perimetral</option><option value="Interna">Interna</option></select>';
