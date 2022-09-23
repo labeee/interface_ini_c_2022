@@ -282,8 +282,7 @@ async function calcular(){
             }
 
         try {
-        //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-        const secao =  await ort.InferenceSession.create('/metamodelo_inic_ann.onnx');
+        const secao =  await ort.InferenceSession.create('labeee.github.io/interface_ini_c_2022/metamodelo_inic_ann.onnx');
         
         secao['handler']['inputNames'][0] = 'entradas'
         secao['handler']['outputNames'][0] = 'saidas'
