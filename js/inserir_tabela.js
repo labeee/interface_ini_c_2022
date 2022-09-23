@@ -82,7 +82,7 @@ function inserir_tabela() {
     cell19.innerHTML = '<input id="dpe_zona'+rowCount+'" type="number" min="4" max="40">';
     cell20.innerHTML = '<select id="ac_zona'+rowCount+'"></select>';
     cell21.innerHTML = '<input id="cgtt_zona'+rowCount+'" type="number" disabled="disabled">';
-    cell22.innerHTML = '<input style="display:none;" id="cgtt_ref'+rowCount+'" type="number" disabled style="display=none">';
+    cell22.innerHTML = '<input id="cgtt_ref'+rowCount+'" type="number" disabled>';
     cell23.innerHTML = '<button class="btn btn-danger" id="rem'+rowCount+'" onclick="remover_zona(this.id)"><i class="fa fa-trash"></i></button>'
 
 

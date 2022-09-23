@@ -322,8 +322,8 @@ function GetTableFromExcel(data) {
                     cell19.innerHTML = '<input id="dpe_zona'+indice_linha+'" type="number" value="'+linha[18]+'"min="0" max="90">';
                     cell20.innerHTML = '<select id="ac_zona'+indice_linha+'"></select>';
                     sistemas_preencher.push(linha[21])
-                    cell21.innerHTML = '<input id="cgtt_zona'+indice_linha+'" disabled="disabled">';
-                    cell22.innerHTML = '<input  id="cgtt_ref'+indice_linha+'" type="number" disabled style="display=none">';
+                    cell21.innerHTML = '<input id="cgtt_zona'+indice_linha+'" disabled>';
+                    cell22.innerHTML = '<input  id="cgtt_ref'+indice_linha+'" type="number" disabled>';
                     cell23.innerHTML = '<button class="btn btn-danger" id="rem'+indice_linha+'" onclick="remover_zona(this.id)"><i class="fa fa-trash"></i></button>'
                 }
             }
