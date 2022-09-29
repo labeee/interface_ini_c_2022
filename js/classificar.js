@@ -659,8 +659,13 @@ function classificar(){
 
   //classificação da água quente
   sistema_aq = document.getElementById('sistema_aq').value
-  aq_real = parseFloat(document.getElementById('aq_real').value)
-  aq_ref = parseFloat(document.getElementById('aq_referencia').value)
+
+  //garantir que não preenchidos sejam 0
+  aq_real_eletrica = parseFloat(document.getElementById('aq_real_eletrica').value)
+  aq_real_termica = parseFloat(document.getElementById('aq_real_termica').value)
+  aq_referencia = parseFloat(document.getElementById('aq_referencia').value)
+  aq_real = parseFloat(aq_real_eletrica)*1.6+parseFloat(aq_real_termica)*1.1
+  aq_ref = parseFloat(aq_referencia)*1.6
   
   dif_sistema_aq = ((aq_ref-aq_real)/aq_ref)*100
   if (aq_real == aq_ref){dif_sistema_aq = 0}
@@ -750,10 +755,36 @@ function classificar(){
 
 
   //classificação geral
-  var geracao = document.getElementById('geracao').value
+  var geracao = parseFloat(document.getElementById('geracao').value)
   if (geracao == NaN || geracao == ''){geracao = 0}
-  var CEPreal = parseFloat(consumo_ac_real)*1.6 + parseFloat(aq_real) + parseFloat(consumo_equipamentos*1.6) - parseFloat(geracao)*1.6
-  var CEPref =  parseFloat(consumo_ac_ref)*1.6 + parseFloat(aq_ref) + parseFloat(consumo_equipamentos*1.6)
+  if (isNaN(aq_real) || isNaN(aq_ref)){aq_real_conta = 0} else{aq_real_conta = aq_real}
+  if (isNaN(aq_ref) || isNaN(aq_real)){aq_ref_conta = 0} else {aq_ref_conta = aq_ref} // se um dos dois não for preenchido, o outro não pode entrar na conta do consumo total
+  var CEPreal = parseFloat(consumo_ac_real)*1.6 + parseFloat(aq_real_conta) + parseFloat(consumo_equipamentos*1.6) - parseFloat(geracao)*1.6
+  var CEPref =  parseFloat(consumo_ac_ref)*1.6 + parseFloat(aq_ref_conta) + parseFloat(consumo_equipamentos*1.6)
+  
+  //definir o tipo de sistema de apoio para selecionar o coeficiente de emissões de CO2 da parte térmica
+  var tipo_apoio = document.getElementById('apoio_aq').value
+  if(tipo_apoio == 'GLP'){
+    var emissao_termica = 0.227
+  }
+  else if (tipo_apoio == 'GNV'){
+    var emissao_termica = 0.202
+  }
+  else{var emissao_termica = 0}
+
+  //definir se é parte de  Sistema Interligado Nacional (SIN) ou não para definição das emissões de CO2 por eletricidade
+  if (document.getElementById('sistema_eletricidade').value == 'Sistema Interligado Nacional'){
+    var emissao_eletricidade = 0.09
+  }
+  else{var emissao_eletricidade = 0.753}
+
+  if (isNaN(aq_real_eletrica)|| isNaN(aq_real_termica) || isNaN(aq_ref)){aq_real_eletrica_conta = 0} else{aq_real_eletrica_conta = aq_real_eletrica}
+  if (isNaN(aq_real_termica) || isNaN(aq_real_eletrica) || isNaN(aq_ref)){aq_real_termica_conta = 0} else{aq_real_termica_conta = aq_real_termica}
+
+  var emissao_real = parseFloat(consumo_ac_real)*1.6*emissao_eletricidade + parseFloat(aq_real_eletrica_conta)*1.6*emissao_eletricidade+ parseFloat(aq_real_termica_conta)*1.1*emissao_termica + parseFloat(consumo_equipamentos)*1.6*emissao_eletricidade - parseFloat(geracao)*1.6*emissao_eletricidade
+  var emissao_ref =  parseFloat(consumo_ac_ref)*1.6*emissao_eletricidade + parseFloat(aq_ref_conta)*emissao_eletricidade + parseFloat(consumo_equipamentos)*1.6*emissao_eletricidade
+
+  red_emissoes = (emissao_ref - emissao_real)/(emissao_ref)*100
   REDCEP_geral = (CEPref - CEPreal)/CEPref*100
   if (CEPref == CEPreal){REDCEP_geral = 0}
   
@@ -768,6 +799,22 @@ function classificar(){
   else if (0 <= REDCEP_geral  && REDCEP_geral <= (i)){classificacao_ed = 'D'}
   else if (REDCEP_geral < 0){classificacao_ed = 'E'}
   else{classificacao_ed = 'erro'}
+
+  //classificação geral sem geracao
+
+  var CEPreal_sem = parseFloat(consumo_ac_real)*1.6 + parseFloat(aq_real_conta) + parseFloat(consumo_equipamentos*1.6)
+  var CEPref_sem =  parseFloat(consumo_ac_ref)*1.6 + parseFloat(aq_ref_conta) + parseFloat(consumo_equipamentos*1.6)
+  REDCEP_geral_sem = (CEPref_sem - CEPreal_sem)/CEPref_sem*100
+  if (CEPref_sem == CEPreal_sem){REDCEP_geral_sem = 0}
+  
+  classificacao_ed_sem = 'Zero'
+
+  if (REDCEP_geral_sem > (3*i)){classificacao_ed_sem = 'A'}
+  else if ((2*i) <= REDCEP_geral_sem && REDCEP_geral_sem <= (3*i)){classificacao_ed_sem = 'B'}
+  else if ((i) < REDCEP_geral_sem  && REDCEP_geral_sem < (2*i)){classificacao_ed_sem = 'C'}
+  else if (0 <= REDCEP_geral_sem  && REDCEP_geral_sem <= (i)){classificacao_ed_sem = 'D'}
+  else if (REDCEP_geral_sem < 0){classificacao_ed_sem = 'E'}
+  else{classificacao_ed_sem = 'erro'}
   
 
   //após calculadas todas as classificações, devem ser buscados os erros e mensagens de alerta, colocar na tela e trocar as imagens de classificação
@@ -816,6 +863,7 @@ function classificar(){
 
   if (mensagem_ventilado!= ''){
     classificacao_ed = 'Zero'
+    classificacao_ed_sem = 'Zero'
     window.alert(mensagem_ventilado)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
     document.getElementById('img_envoltoria').src = 'img/classZero.svg'
@@ -824,6 +872,7 @@ function classificar(){
 
   else if (mensagem_cargas != ''){
     classificacao_ed = 'Zero'
+    classificacao_ed_sem = 'Zero'
     window.alert(mensagem_cargas)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
     document.getElementById('img_envoltoria').src = 'img/classZero.svg'
@@ -842,6 +891,7 @@ function classificar(){
  if((consumo_ac_real == NaN || consumo_ac_real == 0) && (document.getElementById('check_condicionada').checked || document.getElementById('check_hibrida').checked)){
     window.alert('Verifique se foram calculadas e preenchidas todas as cargas térmicas e consumos de condicionamento!')
     classificacao_ed = 'erro'
+    classificacao_ed_sem = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
     document.getElementById('img_ac').src = 'img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
@@ -849,6 +899,7 @@ function classificar(){
   else if (classificacao_sistema_ac == 'erro'){
     window.alert(mensagem_ac)
     classificacao_ed = 'erro'
+    classificacao_ed_sem = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
     document.getElementById('img_ac').src = 'img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
@@ -912,18 +963,30 @@ function classificar(){
     document.getElementById('consumo_geral').innerHTML = '- kWh/ano' 
     document.getElementById('img_geral').src = 'img/classZero.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: - %'
+    document.getElementById('classe_sem_geracao').innerHTML = '-'
+    document.getElementById('reducao_total').innerHTML = '-'
+  }
+
+  if (classificacao_ed_sem == 'Zero'){
+    document.getElementById('classe_sem_geracao').innerHTML = '-'
   }
 
   else{
     document.getElementById('consumo_geral').innerHTML = Math.round(CEPreal) + ' kWh/ano' 
     document.getElementById('img_geral').src = 'img/class'+classificacao_ed+'.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP_geral)+' %'
+    document.getElementById('reducao_total').innerHTML = Math.round(REDCEP_geral)
+    document.getElementById('classe_sem_geracao').innerHTML = classificacao_ed_sem
+    document.getElementById('consumo_total_ref').innerHTML = Number((CEPref)/(parseFloat(document.getElementById('area_construida').value))).toFixed(2)
+    document.getElementById('consumo_total_real').innerHTML =Number((CEPreal)/(parseFloat(document.getElementById('area_construida').value))).toFixed(2)
+    document.getElementById('reducao_total').innerHTML = Number(REDCEP_geral).toFixed(2);
+    document.getElementById('emissoes_real').innerHTML = Number(emissao_real/1000).toFixed(2); // divide por 1000 para indicar tonelada
+    document.getElementById('emissoes_ref').innerHTML = Number(emissao_ref/1000).toFixed(2); // divide por 1000 para indicar tonelada
+    document.getElementById('reducao_emissoes').innerHTML = Number(red_emissoes).toFixed(2); // divide por 1000 para indicar tonelada
   }
   
   document.getElementById('area_resumo').innerHTML = document.getElementById('area_construida').value;
   document.getElementById('nome_ed').innerHTML = document.getElementById('nome_projeto').value;
-  document.getElementById('consumo_total_real').innerHTML = Number(CEPreal).toFixed(2);
-  document.getElementById('consumo_total_ref').innerHTML = Number(CEPref).toFixed(2);
-  document.getElementById('reducao_total').innerHTML = Number(REDCEP_geral).toFixed(2);
+
 }
 

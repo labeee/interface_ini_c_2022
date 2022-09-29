@@ -22,10 +22,48 @@ const inputEnabler = (e) => {
 function adicionar_limites(){
     var rowCount = ($('#myTable tr').length)-1; //-1 pois desconsidera a primeira linha, que é cabeçalho
     for (var linha = 0; linha < rowCount; linha++) {
+
+        //limites dos inputs
         for (let i = 0; i < entradas_com_limites.length; i++) {
             document.getElementById(entradas_com_limites[i]+linha).addEventListener('focusout', (e) => {
             inputEnabler(e);
             });
+        }
+
+        //celulas a travar em condições específicas 
+        //zona interna:
+        travar_array = ['orientacoes', 'lista_vidros', 'lista_paredes', 'avs_zona', 'ahs_zona', 'aov_zona', 'paf_zona']
+        document.getElementById('tipo_zona'+linha).onchange = function(){
+          var numero = (this.id).slice(9,) //numero da linha
+          if (this.value =='Interna') {
+            for (travar of travar_array){                                                       
+              document.getElementById(travar+numero).value = '';
+              document.getElementById(travar+numero).style.background = '#F5F5F5';
+              document.getElementById(travar+numero).disabled = true;
+            } 
+          }
+          if (this.value =='Perimetral') {
+            for (travar of travar_array){                                                       
+              document.getElementById(travar+numero).value = '';
+              document.getElementById(travar+numero).style.background = '#FFFFFF';
+              document.getElementById(travar+numero).disabled = false;
+            } 
+          }
+        }
+        //cobertura não exposta
+        document.getElementById('cond_cob_zona'+linha).onchange = function(){
+            var numero = (this.id).slice(13,) //numero da linha
+            if (this.value =='Não exposta') {                               
+                document.getElementById('lista_coberturas'+numero).value = '';
+                document.getElementById('lista_coberturas'+numero).style.background = '#F5F5F5';
+                document.getElementById('lista_coberturas'+numero).disabled = true;
+            }
+
+            if (this.value =='Exposta') {                               
+              document.getElementById('lista_coberturas'+numero).value = '';
+              document.getElementById('lista_coberturas'+numero).style.background = '#FFFFFF';
+              document.getElementById('lista_coberturas'+numero).disabled = false;
+          }
         }
     }
 }
@@ -70,7 +108,7 @@ $(document).ready(function(){
 
 
 
-function limite_modais(){ //tem que ser em função porque as ids so existem quando se abre o modal
+function limite_modais(){ //tem que ser em função a ser chamada porque as ids so existem quando se abre o modal
   ids_modais = ["u_vidro", "valor_fs", "u_parede", "ct_parede", "ars_parede","u_cob", "ct_cob", "ars_cob","capacidade_ac", "valor_cee", "renovacao_ac"]
   for (n of ids_modais){
     document.getElementById(n).onchange = function (){
@@ -91,5 +129,5 @@ function limite_modais(){ //tem que ser em função porque as ids so existem qua
 }
 
 
-    
-  
+
+

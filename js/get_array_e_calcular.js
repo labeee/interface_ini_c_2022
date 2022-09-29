@@ -91,7 +91,51 @@ async function calcular(){
         else if (posicao_azimute =='O'){var AZI = 270}
         else {var AZI = 315}
 
+         //condicionais se a zona for interna 
+         if (array [entradas.indexOf('tipo_zona')] == 'Interna'){
+            var Zint = 1
+            var AZI = 0
+            var FS = 0
+            var uvid = 0
+            var WWR = 0
+            var AHS =  0
+            var AOV = 0
+            var AVS = 0
+            var FS_ref = 0
+            var uvid_ref = 0
+            var WWR_ref = 0
+            var INF = 0
+            var apar = 0
+            var upar = 0
+            var ct_par = 0
+        }
         
+        else {//caso não seja zona interna (quando é perimetral)
+            
+            var Zint = 2
+            
+            //dados dos vidros
+            dados_vidro = vidros.filter(vidro => vidro.nome ==  array[entradas.indexOf('lista_vidros')])[0]; 
+            var uvid = dados_vidro.u_vid;
+            var FS = dados_vidro.fs_vid;
+            var uvid_ref = 5.7
+            var FS_ref = 0.82
+
+            // dados da parede 
+            dados_parede = paredes.filter(parede => parede.nome ==  array[entradas.indexOf('lista_paredes')])[0]
+            var apar = dados_parede.ars_par;
+            var upar = dados_parede.u_par;
+            var ct_par = dados_parede.ct_par;
+
+            //angulos da abertura
+            var AHS = parseFloat(array[entradas.indexOf('ahs_zona')])
+            var AVS = parseFloat(array[entradas.indexOf('avs_zona')])
+            var AOV = parseFloat(array[entradas.indexOf('aov_zona')])
+
+            //PAF
+            var WWR = parseFloat(array[entradas.indexOf('paf_zona')])
+        }
+
         // dados relativos à tipologia -> posteriormente capturar dados de referência
         dados_uso = uso_zonas.filter(uso => uso.nome == array[entradas.indexOf('lista_usos')])[0];  //0 pois espera-se que encontre somente um, mas de toda forma retorna o primeiro que encontrar
         var hOcc = dados_uso.horas_ocupacao; // horas de ocupação
@@ -104,11 +148,6 @@ async function calcular(){
         var FGroud = dados_piso.FloorGroud;
         var FOutdoors = dados_piso.FloorOutdoors;
 
-        // dados da parede (colocar condicional das zonas internas para travar)
-        dados_parede = paredes.filter(parede => parede.nome ==  array[entradas.indexOf('lista_paredes')])[0]
-        var apar = dados_parede.ars_par;
-        var upar = dados_parede.u_par;
-        var ct_par = dados_parede.ct_par;
         var apar_ref = 0.5
         var upar_ref = 2.39
         var ct_par_ref = 150
@@ -136,20 +175,8 @@ async function calcular(){
             var ct_cob_ref = 0;
         }
 
-        // dados dos vidros (colocar condicional das zonas internas para travar células)
-        dados_vidro = vidros.filter(vidro => vidro.nome ==  array[entradas.indexOf('lista_vidros')])[0]; 
-        var uvid = dados_vidro.u_vid;
-        var FS = dados_vidro.fs_vid;
-        var uvid_ref = 5.7
-        var FS_ref = 0.82
 
-        //angulos da abertura
-        var AHS = parseFloat(array[entradas.indexOf('ahs_zona')])
-        var AVS = parseFloat(array[entradas.indexOf('avs_zona')])
-        var AOV = parseFloat(array[entradas.indexOf('aov_zona')])
-
-        //paf
-        var WWR = parseFloat(array[entradas.indexOf('paf_zona')])
+        //condicional para o paf
         if (WWR == 0){var WWR_ref = 0}
         else {
             if (array[entradas.indexOf('fachada') == 'Não']){
@@ -167,27 +194,8 @@ async function calcular(){
         var DPE = parseFloat(array[entradas.indexOf('dpe_zona')])
         var DPI_ref = dados_uso.dpi_ref
 
-        
-        //condicionais se a zona for interna 
-        if (array [entradas.indexOf('tipo_zona')] == 'Interna'){
-            var Zint = 1
-            var AZI = 0
-            var FS = 0
-            var uvid = 0
-            var WWR = 0
-            var AHS =  0
-            var AOV = 0
-            var AVS = 0
-            var FS_ref = 0
-            var uvid_ref = 0
-            var WWR_ref = 0
-        }
-        
-        else {
-            var Zint = 2
-        }
-        
 
+        
         // as informações de clima já foram descritas na função cidades.js
         // a ordem é: AZI	 DPE	 DPI	 FS	 INF	 PESSOAS	 UVID	 aCOB	 aPAR	 PD	 WWR	 AHS	 AVS	 AOV	 hOcc	 FloorGround	 FloorOutdoors	 RoofOutdoors	 Ucob	 Upar	 CTcob	 CTpar	 PISOisol	 Zint	 Latitude	 Altitude	 Vvento	 Radiacao	 TMA	 dpT	 AMA	 dpA
 
@@ -282,7 +290,8 @@ async function calcular(){
             }
 
         try {
-        const secao =  await ort.InferenceSession.create('metamodelo_inic_ann.onnx');
+        //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
+        const secao =  await ort.InferenceSession.create('/metamodelo_inic_ann.onnx');
         
         secao['handler']['inputNames'][0] = 'entradas'
         secao['handler']['outputNames'][0] = 'saidas'

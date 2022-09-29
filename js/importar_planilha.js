@@ -6,13 +6,12 @@ function GetTableFromExcel(data) {
             type: 'binary'
         });
 
-
         //importação das informações iniciais
             var linhas_gerais = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Resumo']).slice(2,);
             //nome do projeto
             document.getElementById('nome_projeto').value = linhas_gerais[0].__EMPTY_2
             //tipologia predominante
-            document.getElementById('tipo_predominante').value = linhas_gerais[8].__EMPTY_2
+            document.getElementById('tipo_predominante').value = linhas_gerais[9].__EMPTY_2
             //tomar e inserir o nome do estado
             var nome_estado = linhas_gerais[4].__EMPTY_2
             document.getElementById('estados').value = nome_estado
@@ -45,19 +44,20 @@ function GetTableFromExcel(data) {
         
             zona_nome = document.getElementById('numero_zb')
             zona_nome.innerHTML = '0'+ZB;
-        
+            
+            //tipo de sistema de geracao de eletricidade
+            document.getElementById('sistema_eletricidade').value = linhas_gerais[6].__EMPTY_2
 
             //fator de forma
-            var ff = linhas_gerais[9].__EMPTY_2
+            var ff = linhas_gerais[10].__EMPTY_2
             document.getElementById('fator_de_forma').value = ff 
             
             //área construída 
-            document.getElementById('area_construida').value = linhas_gerais[7].__EMPTY_2;
+            document.getElementById('area_construida').value = linhas_gerais[8].__EMPTY_2;
 
 
         //tomar dados de iluminação 
             var info_ilum = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Iluminação']).slice(4,15); 
-            
             if (info_ilum[0].__EMPTY_2 == 'Método de simulação'){
                 document.getElementById('iluminacao_referencia').value = info_ilum[2].__EMPTY_27
                 document.getElementById('iluminacao_real').value = info_ilum[3].__EMPTY_27
@@ -76,11 +76,12 @@ function GetTableFromExcel(data) {
             }
 
         //tomar dados de aquecimento de água
-            var info_aq = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['AquecimentoÁgua']).slice(4,7); 
+            var info_aq = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['AquecimentoÁgua']).slice(4,26); 
             document.getElementById('sistema_aq').value  = info_aq[0].__EMPTY_2
-            document.getElementById('aq_referencia').value = info_aq[1].__EMPTY_2
-            document.getElementById('aq_real').value = info_aq[2].__EMPTY_2
-
+            document.getElementById('apoio_aq').value = info_aq[21].__EMPTY_2
+            document.getElementById('aq_referencia').value = info_aq[11].__EMPTY_19
+            document.getElementById('aq_real_eletrica').value = info_aq[11].__EMPTY_20
+            document.getElementById('aq_real_termica').value = info_aq[11].__EMPTY_21
 
         //tomar dados de geração
             var info_ge = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Opc_Geração']).slice(3,5);
@@ -404,6 +405,31 @@ function GetTableFromExcel(data) {
                 sel_ac.value = $.trim(sistemas_preencher[i]) //o trim remove eventuais espaços antes e depois da string
                 })
 
+                
+                //travar campos se cob não exposta ou zona interna
+
+                travar_array = ['orientacoes', 'lista_vidros', 'lista_paredes', 'avs_zona', 'ahs_zona', 'aov_zona', 'paf_zona']
+                
+                if (tipos_preencher[i] =='Interna') {
+                    for (travar of travar_array){                                                       
+                    document.getElementById(travar+i).value = '';
+                    document.getElementById(travar+i).style.background = '#F5F5F5';
+                    document.getElementById(travar+i).disabled = true;
+                    } 
+                }
+
+                
+                //cobertura não exposta
+
+                    
+                if (cond_cob_preencher[i] =='Não exposta') {                               
+                    document.getElementById('lista_coberturas'+i).value = '';
+                    document.getElementById('lista_coberturas'+i).style.background = '#F5F5F5';
+                    document.getElementById('lista_coberturas'+i).disabled = true;
+                }
+
+
+                
             }
 
             //mostrar mensagem indicando se houve erro ou não
