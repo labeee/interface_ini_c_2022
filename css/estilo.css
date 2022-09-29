@@ -60,7 +60,7 @@
 #principal {
     background-color:#D1E0E7;
     grid-area: principal;
-    margin-top: 1vh;
+    margin-top: 1.2vh;
     margin-right: 1vh;
 }
 
@@ -68,8 +68,7 @@
     background-color:#D1E0E7;
     grid-area: sidebar;
     margin-top: 0.75vh;
-    width: 27vh;
-    
+    width: 30vh;
 }
 
 .nav-buttons {
@@ -142,7 +141,7 @@
     vertical-align: middle;
     background-color: #F5F5F5;
     border-collapse: collapse;
-    min-width: 25px;
+    min-width: 75px;
     border: 1px solid #d0d0d0;
     border-radius: 0.5px;
     
@@ -151,7 +150,7 @@
 #myTable tr {
     text-align: center;
     vertical-align: middle;
-    border: 1px solid gray;
+    border: 1px solid #93dbe7;
 
 }
 #myTable td {
@@ -201,12 +200,16 @@
 .column {
     float: left;
     width: 50%;
-  }
+}
 
 .column2 {
     float: left;
     width: 33%;
- }
+}
+
+.resultados {
+    column-count: 4;
+  }
 
   #grad {
     background-image: linear-gradient(to right, #FFFFFF , #0098DA);
