@@ -297,9 +297,9 @@ function GetTableFromExcel(data) {
                     cell2.innerHTML = '<input id="nome_zona'+indice_linha+'" type="text" value='+linha[1]+'>';
                     cell3.innerHTML = '<input id="area_zona'+indice_linha+'" type="number" value='+linha[2]+' min="0" max="10000">';
                     cell4.innerHTML = '<input id="pd_zona'+indice_linha+'" type="number" value='+linha[3]+' min="2.6" max="6.6">';
-                    cell5.innerHTML = '<select id="orientacoes'+(indice_linha)+'"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>'
+                    cell6.innerHTML = '<select id="orientacoes'+(indice_linha)+'"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>'
                     orientacoes_preencher.push(linha[4])
-                    cell6.innerHTML = '<select id="tipo_zona'+indice_linha+'"><option value="Interna">Interna</option><option value="Perimetral">Perimetral</option></select>'
+                    cell5.innerHTML = '<select id="tipo_zona'+indice_linha+'"><option value="Interna">Interna</option><option value="Perimetral">Perimetral</option></select>'
                     tipos_preencher.push(linha[5])
                     cell7.innerHTML = '<select id="lista_usos'+indice_linha+'"></select>'
                     usos_preencher.push(linha[6])
