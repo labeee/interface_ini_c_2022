@@ -17,7 +17,7 @@ function remover_zona(clicked_id) {
             id_atual = lin.id.substr(4,) //tira o zona e fica somente o número
             novo_id = conjunto_linhas.indexOf(lin) //posição da linha atualmente dentro do array
             lin.id = 'zona'+novo_id
-            entradas = ['lista_pavimentos','nome_zona','area_zona', 'pd_zona','orientacoes', 'lista_usos', 'tipo_zona',  'cond_piso_zona', 'cond_cob_zona', 'lista_paredes', 'lista_coberturas', 'paf_zona', 'fachada', 'lista_vidros', 'avs_zona', 'ahs_zona', 'aov_zona', 'dpi_zona', 'dpe_zona', 'cgtt_zona', 'cgtt_ref','rem',] // deve mudar o id de todas as entradas e também do botão remover, pois os ids são usados nos cálculos e na próxima vez o id do botão será usado para excluir a linha correspondente. cgtt_ref é uma coluna oculta
+            entradas = ['lista_pavimentos','nome_zona','area_zona', 'pd_zona', 'tipo_zona','orientacoes', 'lista_usos',   'cond_piso_zona', 'cond_cob_zona', 'lista_paredes', 'lista_coberturas', 'paf_zona', 'fachada', 'lista_vidros', 'avs_zona', 'ahs_zona', 'aov_zona', 'dpi_zona', 'dpe_zona', 'cgtt_zona', 'cgtt_ref','rem',] // deve mudar o id de todas as entradas e também do botão remover, pois os ids são usados nos cálculos e na próxima vez o id do botão será usado para excluir a linha correspondente. cgtt_ref é uma coluna oculta
             for (nome of entradas){
                 document.getElementById(nome+id_atual).id = nome+novo_id
             }        
@@ -65,8 +65,8 @@ function inserir_tabela() {
     cell2.innerHTML = '<input id="nome_zona'+rowCount+'" type="text" value="zona '+rowCount+'">';
     cell3.innerHTML = '<input id="area_zona'+rowCount+'" type="number" min="0" max="10000">';
     cell4.innerHTML = '<input id="pd_zona'+rowCount+'" type="number" min="2.6" max="6.6">';
-    cell5.innerHTML = '<select id="orientacoes'+rowCount+'"type="text"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>';
-    cell6.innerHTML = '<select id="tipo_zona'+rowCount+'"><option value="Perimetral">Perimetral</option><option value="Interna">Interna</option></select>';
+    cell5.innerHTML = '<select id="tipo_zona'+rowCount+'"><option value="Perimetral">Perimetral</option><option value="Interna">Interna</option></select>';
+    cell6.innerHTML = '<select id="orientacoes'+rowCount+'"type="text"><option value="N">N</option><option value="NE">NE</option><option value="L">L</option><option value="SE">SE</option><option value="S">S</option><option value="SO">SO</option><option value="O">O</option><option value="NO">NO</option></select>';
     cell7.innerHTML = '<select id="lista_usos'+rowCount+'"></select>';
     cell8.innerHTML = '<select id="cond_piso_zona'+rowCount+'"></select>';
     cell9.innerHTML = '<select id="cond_cob_zona'+rowCount+'"><option value="Exposta">Exposta</option><option value="Não exposta">Não exposta</option></select>';
