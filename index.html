@@ -45,13 +45,14 @@
 
 </head>
 
-<body style="margin:0; padding:0">
+<body style="margin:0; padding:0;">
 	<div  class="divisao" >
 		<div id="cabecalho">
-			<div id="img_header" style="width:16vh;height:9vh;" ></div>
+			<div id="img_header" style="width:16vh;height:9vh;" >
+			</div>
 			<div class="tittle-instrucao">
 				Instrução Normativa INMETRO <br>
-				Edificações Comerciais, de Servições e Públicas
+				Edificações Comerciais, de Serviços e Públicas
 			</div>
 		</div>
 
@@ -97,7 +98,7 @@
 
 		<div id="principal" style="border-radius:15px;background-color: #FFFFFF;">
 			
-			<div class="tab-content" id="v-pills-tabContent" >
+			<div class="tab-content" id="v-pills-tabContent" style="height:100%;overflow-y: auto;">
 				
 				<!-- Conteúdo da aba Geral -->
 				<div class="tab-pane fade show active" id="geral-content" role="tabpanel" >
@@ -107,8 +108,8 @@
 								<h3 id="tittle-caracteristicas" style="font-weight: bolder">Características gerais da edificação</h3>
 							</div>
 							<div class="col-1">
-								<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_resumo()"></button>
-								<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_resumo()"></button>
+								<button type="button" class="btn btn-light" onclick="clear_resumo()"><img  class="btn-limpar-dados" src="img/icone_02.svg"  style="width: 15px;height:15px;" ></button>
+								<button type="button" class="btn btn-light" onclick="next_resumo()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 							</div>
 						</div>
 
@@ -119,7 +120,7 @@
 									<label>Identificação do projeto:</label> <br>
 									<label>Estado:</label><br>
 									<label>Cidade:</label><br>
-									<label>Tipo de geração de eletricidade:</label><br>
+									<label>Sistema de fornecimento de eletricidade:</label><br>
 									<label>Fator de Forma:</label><br>
 									<label>Tipologia predominante:</label><br>
 									<label>Área construída total (m²):</label><br>
@@ -130,6 +131,7 @@
 										<br><a style="font-size:1.5vh" href="ANEXO_I.6.xlsx">Clique aqui para baixar a planilha</a>
 									</div>
 							</div>
+							<div class="col-4" style="position:relative;right:25%;">
 
 							<div id="descricao_cont" class="col"> <!-- class="column" -->
 									<input class="entradas" type="text" id="nome_projeto" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
@@ -166,7 +168,7 @@
 										<option value="TO">Tocantins</option>
 									</select>
 									<br>
-								
+									
 									<!--Estado. Script do de importação das cidades e dos dados climáticos-->
 									<script src="js/cidades.js"></script>
 
@@ -185,18 +187,38 @@
 
 									<!--Tipologia Predominante:-->
 									<select id="tipo_predominante" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-										<option>Escritórios</option><option>Educacional</option><option>Hospedagem</option><option>Est. Assist. de Saúde</option><option>Varejo - Comércio</option><option>Varejo - Mercados</option><option>Restaurantes</option><option>Outras</option>
+										<option>Escritórios</option>
+										<option>Educacional</option>
+										<option>Hospedagem</option>
+										<option>Est. Assist. de Saúde</option>
+										<option>Varejo - Comércio</option>
+										<option>Varejo - Mercados</option>
+										<option>Restaurantes</option>
+										<option>Outras</option>
 									</select>
 									<br>
 
 									<input type="number" min="0" id="area_construida" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-						
+								
+								</div>
 
 								</div>
 						
 								<!--Zonas bioclimáticas:-->
 								<!-- ;padding: 1.5vh; -->
-								<div class="col card m-3" id="zona-bio" style="background-color: #F5F5F5;border-radius: 10px;width:25vh" >
+
+								<div class="card bg-light mb-3"  id="zona-bio" style="width: 18rem;position:relative;right:25%;background-color: #F5F5F5;height:max-content;">
+									<div class="card-header">
+										<p id="zb" style="text-align:center;font-size:1.4rem;font-weight:bold;"> Zona Bioclimática: </p>
+									</div>
+									<div class="card-body">
+										<div id="numero_zb" style="text-align:center;font-size:10rem;">
+										</div>
+									</div>
+								  </div>
+
+								<!--
+								<div class="col card m-3" id="zona-bio" style="background-color: #F5F5F5;border-radius: 10px;width:2rem;" >
 									<div class="card-body">
 									<div style="text-align:center;font-size:1.4rem;font-weight:bold;">
 										<p id="zb"> Zona Bioclimática: </p>
@@ -205,6 +227,8 @@
 									</div>
 								</div>
 								</div>
+								-->
+
 						</div>
 				</div>
 
@@ -217,14 +241,14 @@
 							<h3 style="font-weight: bolder">Envoltória</h3>
 						</div>
 						<div class="col-1">
-							<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_env()"></button>
-							<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_env()"></button>
+							<button type="button" class="btn btn-light"  onclick="clear_env()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;"></button>
+							<button type="button" class="btn btn-light" onclick="next_env()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
 						</div>
 
 					</div>
 
-					<div class="card m-3" style="background-color: #F5F5F5;">
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 
 						<div class="card-body">
 		
@@ -278,19 +302,19 @@
 							
 
 						<!-- Tab panes -->
-						<div>
+						<div >
 							<!--POPOVER BOOTSTRAP para explicações das entradas?-->	       
-							<div style="margin:0.5vh;font-weight: bold;overflow-x: auto;">
+							<div style="margin:0.5vh;font-weight: bold;overflow-x: auto;" class="table-responsive-sm">
 							<div>
-									<table id="myTable" style="background-color: #FFFFFF;width:95%;" class="table table-bordered table-hover">
+									<table id="myTable" style="background-color: #FFFFFF; width:95%; " class="table table-bordered table-hover">
 										<thead>
 											<tr>
 												<th class="col-md-2">Pavimento</th>
 												<th class="col-md-2">Zona térmica</th>
 												<th class="col-md-2">Área (m²)</th>
 												<th class="col-md-2">Pé-direito (m)</th>
-												<th class="col-md-2">Orientação solar</th>
 												<th class="col-md-2">Tipo de zona</th>
+												<th class="col-md-2">Orientação solar</th>
 												<th class="col-md-2">Uso da zona</th>
 												<th class="col-md-2">Condição do piso</th>
 												<th class="col-md-2">Cobertura exposta</th>
@@ -348,14 +372,14 @@
 						</div>
 
 						<div class="col-1">
-							<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_ilum()"></button>
-							<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_ilum()"></button>
+							<button type="button" class="btn btn-light" onclick="clear_ilum()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
+							<button type="button" class="btn btn-light" onclick="next_ilum()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
 						</div>
 					</div>
 
 
-					<div class="card m-3" style="background-color: #F5F5F5;">
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 						<div class="card-body" id='iluminacao_valores'>
 						
 							<label>Consumo de iluminação na Condição de Referência (kWh/ano):</label>
@@ -379,13 +403,13 @@
 						</div>
 	
 						<div class="col-1">
-							<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_aq()"></button>
-							<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_aq()"></button>
+							<button type="button" class="btn btn-light" onclick="clear_aq()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
+							<button type="button" class="btn btn-light" onclick="next_aq()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 						</div>
 
 					</div>
 
-					<div class="card m-3" style="background-color: #F5F5F5;">
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 						<div class="card-body" id='aq_valores'>
 							<label>Tipo de sistema:</label><br>
 								<select style="width:250px;margin-bottom:10px" id="sistema_aq"><option value="Com acumulação">Com acumulação</option><option value="Sem acumulação">Sem acumulação</option></select><br>
@@ -411,14 +435,14 @@
 							<h3 style="font-weight: bolder">Geração de Energia</h3>
 						</div>
 						<div class="col-1">
-							<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_ge()"></button>
-							<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_ge()"></button>
+							<button type="button" class="btn btn-light" onclick="clear_ge()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
+							<button type="button" class="btn btn-light" onclick="next_ge()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
 						</div>
 
 					</div>
 					
-					<div class="card m-3" style="background-color: #F5F5F5;">
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 						<div class="card-body" id='geracao_valores'>
 							<label>Tipo de sistema:</label>
 							<br>
@@ -447,14 +471,14 @@
 						</div>
 
 						<div class="col-1">
-							<button type="button" class="btn btn-light" ><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 22px;" onclick="clear_ac()"></button>
-							<button type="button" class="btn btn-light" style="width: fit-content;"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 22px;" onclick="next_ac()"></button>
+							<button type="button" class="btn btn-light" onclick="clear_ac()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
+							<button type="button" class="btn btn-light" onclick="next_ac()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
 						</div>
 
 					</div>
 					
-					<div class="card m-3" style="background-color: #F5F5F5;">
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 						<div class="card-body">
 
 						<h6 style="font-weight: bold;">Tipo de condicionamento da edificação:</h6>
@@ -473,7 +497,7 @@
 					<script src="js/alternar_ventilacao.js"></script>
 
 					<!--CONDICIONADO ARTIFICIALMENTE-->
-					<div class="card m-3" style="background-color: #F5F5F5;" id='div_condicionado'>
+					<div class="card m-3" style="background-color: #F5F5F5;width:40%;" id='div_condicionado'>
 						<div class="card-body">
 						<label style="font-weight: bold;">Dados do sistema de condicionamento de ar</label><br>
 						<label style="font-weight: bold;">Capacidade total de resfriamento dos sistemas de condicionamento de ar (kW)</label><br>
@@ -526,10 +550,119 @@
 				<!--Conteúdo da aba de resultados-->
 					<div style="margin:2vh;">
 						<h3 style="font-weight: bolder"> Classificação de Eficiência Energética</h3>
-						<p>Consumo em Energia Primária</p>
+						<button style="margin-right:1.5%;width: 10%;" class="btn btn-primary" onclick="classificar()" >CLASSIFICAR</button>	
+						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="classificar()">Baixar planilha</button>	
+						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="classificar()">Baixar PDF</button>	
+
 					</div>
 					
-					<div class="row">
+			
+					<div class="card-deck" style="position: relative; left:2vh;">
+
+						<div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
+							<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+								Envoltória*
+								<h3 id='carga_envoltoria' style="font-size: 0.8em; text-align: center;">- kWh/ano </h3>
+							</div>
+							<div class="card-body text-secondary">
+								<h5 id='reducao_envoltoria' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
+								<img id='img_envoltoria' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
+								<h6 style="font-size: 0.8em; text-align: center;">* Carga térmica de resfriamento. </h6>
+
+							</div>
+						  </div>
+
+						  <div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
+							<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+								Ar-condicionado
+								<h3 id='consumo_ac' style="font-size: 0.8em; text-align: center;">- kWh/ano</h3>
+							</div>
+							<div class="card-body text-secondary">
+								<h5 id='reducao_ac' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
+								<img id='img_ac' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
+								<h6 style="font-size: 0.8em; text-align: center;">Consumo em Energia Primária. </h6>
+
+
+							</div>
+						  </div>
+
+						  <div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
+							<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+								Iluminação
+								<h3 id='consumo_iluminacao'style="font-size: 0.8em; text-align: center;">- kWh/ano</h3>
+								</div>
+							<div class="card-body text-secondary">
+								<h5 id='reducao_iluminacao' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
+								<img id='img_iluminacao' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
+								<h6 style="font-size: 0.8em; text-align: center;">Consumo em Energia Primária. </h6>
+
+							</div>
+						  </div>
+
+						  <div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
+							<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+								Aquecimento de água
+								<h3 id='consumo_aq' style="font-size: 0.8em; text-align: center;">- kWh/ano</h3>
+	
+							</div>
+							<div class="card-body text-secondary">
+								<h5 id='reducao_aq' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
+								<img id='img_aq'style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
+								<h6 style="font-size: 0.8em; text-align: center;">Consumo em Energia Primária. </h6>
+
+							</div>
+						  </div>
+
+
+					</div>
+
+					<div class="card-deck" style="position: relative; left:2%;">
+
+							<div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
+								<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+									Geral
+									<h3 id='consumo_geral' style="font-size: 0.8em; text-align: center;">- kWh/ano</h3>
+								</div>
+								<div class="card-body text-secondary">
+									<h5 id='reducao_geral' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
+									<img id='img_geral' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
+									<h6 style="font-size: 0.8em; text-align: center;">Consumo em Energia Primária. </h6>
+
+								</div>
+							</div>
+
+
+							<div class="card border-light mb-3" style="max-width: 58rem;height: fit-content;">
+								<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
+									Informações da Edificação
+									<h3  style="font-size: 0.8em; text-align: center;"> </h3>
+								</div>
+								<div class="card-body text-secondary">
+									<div class="column">
+										<p class="card-text">Nome do Projeto: <b id="nome_ed">XX</b> </p>
+										<p class="card-text">Área total (m²): <b id="area_resumo">XX</b></p>
+										<p class="card-text">Consumo Total na Condição de Referência (kWh/m².ano): <b id="consumo_total_ref">-</b> </p>
+										<p class="card-text">Consumo Total na Condição Real (kWh/m².ano): <b id="consumo_total_real">-</b></p>
+										<p class="card-text">Percentual de Redução Geral (%) <b id="reducao_total">-</b></p>
+										<p class="card-text">Classificação sem a Geração de Energia: <b id="classe_sem_geracao">-</b></p>
+									</div>
+									<div class="column">
+										<p class="card-text"> <b>Resumo de emissões:</b> </p>
+										<p class="card-text">Emissão de CO2 na condição de Referência (tCO2eq./ano): <b id="emissoes_ref">-</b></p>
+										<p class="card-text">Emissão de CO2 na condição de Real (tCO2eq./ano): <b id="emissoes_real">-</b></p>
+										<p class="card-text">Percentual de redução das Emissões de CO2 (%): <b id="reducao_emissoes">-</b> %</p>
+									</div>
+								</div>
+							</div>
+
+					</div>
+	
+
+
+					</div>
+
+						  <!--
+
 						<div style="width:15vw;height:20vw;margin-left: 2vw;margin-top: 2vh;">
 							<h2 style="font-size: 1.2em; text-align: center;font-weight: bold;"> Envoltória*</h2>
 								<h3 id='carga_envoltoria' style="font-size: 1.2em; text-align: center;">- kWh/ano </h3>
@@ -557,6 +690,7 @@
 							<img id='img_aq'style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
 						</div>
 					</div>
+					
 					<div class="row" style="position: relative;top:-2vw;">
 						<div style="width:15vw;height:20vw;margin-left: 2vw;" >
 							<h2 style="font-size: 1.2em; text-align: center;margin-top: 0;font-weight: bold;">Geral</h2>
@@ -595,6 +729,7 @@
 						</div>
 
 					</div>
+				-->
 
 				</div>		
 					
