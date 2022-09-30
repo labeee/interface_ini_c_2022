@@ -16,7 +16,7 @@ function clear_env(){
     }    
 }   
 function next_env(){
-    document.getElementById('ilum-tab').click();
+    document.getElementById('ac-tab').click();
 }
 
 function clear_ilum(){
@@ -51,7 +51,7 @@ function clear_ge(){
 }
 
 function next_ge(){
-    document.getElementById('ac-tab').click();
+    document.getElementById('resultados-tab').click();
 }
 
 function clear_ac(){
@@ -75,5 +75,5 @@ function clear_ac(){
 }
 
 function next_ac(){
-    document.getElementById('resultados-tab').click();
+    document.getElementById('ilum-tab').click();
 }
