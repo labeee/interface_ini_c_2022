@@ -594,10 +594,11 @@ function classificar(){
 
   var tipo = document.getElementById('tipo_predominante').value
   var ZB = document.getElementById('numero_zb').innerHTML
-  var fator_forma = String(parseFloat(document.getElementById('fator_de_forma').value))
+  var fator_forma = parseFloat(document.getElementById('fator_de_forma').value)
 
   //classificação da envoltória
-  CRDA = array_classe.filter(item => item.tipologia == tipo && item.ZB == ZB && item.FF_inf < fator_forma && item.FF_sup >= fator_forma)[0].crcgtt_env // CRDA é o coeficiente de redução de D para A
+  CRDA = array_classe.filter(item => item.tipologia == tipo && item.ZB == ZB && parseFloat(item.FF_inf) < fator_forma && parseFloat(item.FF_sup) >= fator_forma)[0].crcgtt_env // CRDA é o coeficiente de redução de D para A
+
   var rowCount = $('#myTable tr').length;
   var rowCount = rowCount - 1 // a primeira linha é o cabeçalho da tabela
   var cargas_real = 0
@@ -623,7 +624,7 @@ function classificar(){
       cargas_ref += parseFloat(document.getElementById('cgtt_ref'+i).value)
       array_cargas_ref.push((parseFloat(document.getElementById('cgtt_ref'+i).value)))
       dados_zt = uso_zonas.filter(uso => uso.nome == document.getElementById('lista_usos'+i).value)[0] //lista para tomar as informações de dpe e horas de uso
-      consumo_equipamentos+=(parseFloat(document.getElementById('dpe_zona'+i).value)*parseFloat(dados_zt.horas_ocupacao)*parseFloat(document.getElementById('area_zona'+i).value))
+      consumo_equipamentos+=(parseFloat(document.getElementById('dpe_zona'+i).value)*parseFloat(dados_zt.horas_ocupacao)*parseFloat(document.getElementById('area_zona'+i).value)*parseFloat(dados_zt.dias_ocupacao)/1000)
     }
   }
   
@@ -788,9 +789,9 @@ function classificar(){
   REDCEP_geral = (CEPref - CEPreal)/CEPref*100
   if (CEPref == CEPreal){REDCEP_geral = 0}
   
-  CRCEPDA = array_total.filter(item => item.tipologia == tipo && item.ZB == ZB && item.FF_inf < fator_forma && item.FF_sup > fator_forma)[0].crcgtt_geral
+  CRCEPDA = array_total.filter(item => item.tipologia == tipo && item.ZB == ZB && parseFloat(item.FF_inf) < fator_forma && parseFloat(item.FF_sup) >= fator_forma)[0].crcgtt_geral
   i = (CRCEPDA*100)/3
-  
+
   classificacao_ed = 'Zero'
 
   if (REDCEP_geral > (3*i)){classificacao_ed = 'A'}
@@ -866,7 +867,7 @@ function classificar(){
     classificacao_ed_sem = 'Zero'
     window.alert(mensagem_ventilado)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/ClassZero.svg'
+    document.getElementById('img_envoltoria').src = 'img/classZero.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
@@ -875,13 +876,13 @@ function classificar(){
     classificacao_ed_sem = 'Zero'
     window.alert(mensagem_cargas)
     document.getElementById('carga_envoltoria').innerHTML = '- kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/ClassZero.svg'
+    document.getElementById('img_envoltoria').src = 'img/classZero.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
   else {
     document.getElementById('carga_envoltoria').innerHTML = cargas_real + ' kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/Class'+classificacao_envoltoria+'.svg'
+    document.getElementById('img_envoltoria').src = 'img/class'+classificacao_envoltoria+'.svg'
     document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP)+' %'
   }
   
@@ -893,7 +894,7 @@ function classificar(){
     classificacao_ed = 'erro'
     classificacao_ed_sem = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
-    document.getElementById('img_ac').src = 'img/ClassZero.svg'
+    document.getElementById('img_ac').src = 'img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   else if (classificacao_sistema_ac == 'erro'){
@@ -901,13 +902,13 @@ function classificar(){
     classificacao_ed = 'erro'
     classificacao_ed_sem = 'erro'
     document.getElementById('consumo_ac').innerHTML = '- kWh/ano' 
-    document.getElementById('img_ac').src = 'img/ClassZero.svg'
+    document.getElementById('img_ac').src = 'img/classZero.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   
   else{
     document.getElementById('consumo_ac').innerHTML = Math.round(consumo_ac_real*1.6) + ' kWh/ano' 
-    document.getElementById('img_ac').src = 'img/Class'+classificacao_sistema_ac+'.svg'
+    document.getElementById('img_ac').src = 'img/class'+classificacao_sistema_ac+'.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_ac)+' %'
   }
 
@@ -925,13 +926,13 @@ function classificar(){
   if (mensagem_ilum != ''){
     window.alert(mensagem_ilum)
     document.getElementById('consumo_iluminacao').innerHTML = ' - kWh/ano' 
-    document.getElementById('img_iluminacao').src = 'img/Class'+classificacao_ilum+'.svg'
+    document.getElementById('img_iluminacao').src = 'img/class'+classificacao_ilum+'.svg'
     document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: - %'
   }
 
   else{
     document.getElementById('consumo_iluminacao').innerHTML = ilum_real*1.6 + ' kWh/ano' 
-    document.getElementById('img_iluminacao').src = 'img/Class'+classificacao_ilum+'.svg'
+    document.getElementById('img_iluminacao').src = 'img/class'+classificacao_ilum+'.svg'
     document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_iluminacao)+' %'
   }
 
@@ -947,12 +948,12 @@ function classificar(){
   if (mensagem_aq  != ''){
     window.alert(mensagem_aq)
     document.getElementById('consumo_aq').innerHTML = '- kWh/ano' 
-    document.getElementById('img_aq').src = 'img/Class'+classificacao_sistema_aq+'.svg'
+    document.getElementById('img_aq').src = 'img/class'+classificacao_sistema_aq+'.svg'
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   else{
     document.getElementById('consumo_aq').innerHTML = aq_real + ' kWh/ano' 
-    document.getElementById('img_aq').src = 'img/Class'+classificacao_sistema_aq+'.svg'
+    document.getElementById('img_aq').src = 'img/class'+classificacao_sistema_aq+'.svg'
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_aq)+' %'
   }
 
@@ -961,7 +962,7 @@ function classificar(){
   if (classificacao_ed == 'erro'){
     window.alert('Existe algum erro na compilação do consumo total da edificação, verifique o preenchimento de todos os sistemas')
     document.getElementById('consumo_geral').innerHTML = '- kWh/ano' 
-    document.getElementById('img_geral').src = 'img/ClassZero.svg'
+    document.getElementById('img_geral').src = 'img/classZero.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: - %'
     document.getElementById('classe_sem_geracao').innerHTML = '-'
     document.getElementById('reducao_total').innerHTML = '-'
@@ -973,7 +974,7 @@ function classificar(){
 
   else{
     document.getElementById('consumo_geral').innerHTML = Math.round(CEPreal) + ' kWh/ano' 
-    document.getElementById('img_geral').src = 'img/Class'+classificacao_ed+'.svg'
+    document.getElementById('img_geral').src = 'img/class'+classificacao_ed+'.svg'
     document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP_geral)+' %'
     document.getElementById('reducao_total').innerHTML = Math.round(REDCEP_geral)
     document.getElementById('classe_sem_geracao').innerHTML = classificacao_ed_sem
@@ -985,9 +986,10 @@ function classificar(){
     document.getElementById('reducao_emissoes').innerHTML = Number(red_emissoes).toFixed(2); // divide por 1000 para indicar tonelada
   }
   
+
+  console.log('CONSUMO DE EQUIPAMENTOS:', consumo_equipamentos)
   document.getElementById('area_resumo').innerHTML = document.getElementById('area_construida').value;
   document.getElementById('nome_ed').innerHTML = document.getElementById('nome_projeto').value;
-  console.log(document.getElementById('img_ac').src)
-  console.log(document.getElementById('img_aq').src)
+
 }
 
