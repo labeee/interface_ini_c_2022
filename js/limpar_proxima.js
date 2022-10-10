@@ -19,6 +19,11 @@ function next_env(){
     document.getElementById('ac-tab').click();
 }
 
+function back_env(){
+    document.getElementById('geral-tab').click();
+}
+
+
 function clear_ilum(){
     let confirmacao = confirm('Tem certeza que deseja limpar os dados desta aba?') //mensagem de confirmação antes de excluir, se ok, exclui, se cancelar nada acontece
     if (confirmacao){
@@ -29,6 +34,11 @@ function clear_ilum(){
 function next_ilum(){
     document.getElementById('aq-tab').click();
 }
+
+function back_ilum(){
+    document.getElementById('ac-tab').click();
+}
+
 
 function clear_aq(){
     let confirmacao = confirm('Tem certeza que deseja limpar os dados desta aba?') //mensagem de confirmação antes de excluir, se ok, exclui, se cancelar nada acontece
@@ -42,6 +52,11 @@ function next_aq(){
     document.getElementById('geracao-tab').click();
 }
 
+function back_aq(){
+    document.getElementById('ilum-tab').click();
+}
+
+
 function clear_ge(){
     let confirmacao = confirm('Tem certeza que deseja limpar os dados desta aba?') //mensagem de confirmação antes de excluir, se ok, exclui, se cancelar nada acontece
     if (confirmacao){
@@ -53,6 +68,11 @@ function clear_ge(){
 function next_ge(){
     document.getElementById('resultados-tab').click();
 }
+
+function back_ge(){
+    document.getElementById('aq-tab').click();
+}
+
 
 function clear_ac(){
     let confirmacao = confirm('Tem certeza que deseja limpar os dados desta aba?') //mensagem de confirmação antes de excluir, se ok, exclui, se cancelar nada acontece
@@ -76,4 +96,8 @@ function clear_ac(){
 
 function next_ac(){
     document.getElementById('ilum-tab').click();
+}
+
+function back_ac(){
+    document.getElementById('env-tab').click();
 }

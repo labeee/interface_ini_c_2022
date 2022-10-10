@@ -1,3 +1,4 @@
+//array com as informações da classificação da envoltória
 array_classe = [{'tipologia': 'Escritórios', 'ZB': '01', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_env': '0.3'},
 {'tipologia': 'Escritórios', 'ZB': '02', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_env': '0.26'},
 {'tipologia': 'Escritórios', 'ZB': '03', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_env': '0.23'},
@@ -288,9 +289,9 @@ array_classe = [{'tipologia': 'Escritórios', 'ZB': '01', 'FF_inf': '0.0', 'FF_s
 {'tipologia': 'Outras', 'ZB': '08', 'FF_inf': '0.4', 'FF_sup': '100.0', 'crcgtt_env': '0.25'},
 ]
 
-
+//array com as informações da classificação total
 array_total = [
-  {'tipologia': 'Escritórios', 'ZB': '01', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_geral': '0.3'},
+{'tipologia': 'Escritórios', 'ZB': '01', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_geral': '0.3'},
 {'tipologia': 'Escritórios', 'ZB': '02', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_geral': '0.29'},
 {'tipologia': 'Escritórios', 'ZB': '03', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_geral': '0.3'},
 {'tipologia': 'Escritórios', 'ZB': '04', 'FF_inf': '0.0', 'FF_sup': '0.2', 'crcgtt_geral': '0.29'},
@@ -618,13 +619,36 @@ function classificar(){
     }
   }
 
-  else{ //para quando for pelo método simplificado, a dpe é inserida, então calcula-se automaticamente o consumo de equipamentos
+  else{ 
+    
+    // a convenção, em discussão, é tomar o consumo dos equipamentos usando a tipologia predominante e toda a área construída
+    if(tipo.includes('Educacional')){ //existem 3 educacionais, com mudança apenas de pessoas/m², que não é relevante nos equipamentos
+      uso_total = dados_uso = uso_zonas.filter(uso => uso.nome == 'Educacional - Infantil')[0]
+    }
+    else{
+      uso_total = dados_uso = uso_zonas.filter(uso => uso.nome == tipo)[0]
+    }
+
+    //checar se é o valor detalhado de DPE ou o padrão
+    if (document.getElementById('dpe_detalhado').value == 'Sim'){
+      dpe_total = document.getElementById('dpe_levantada').value
+    }
+    else{
+      dpe_total = uso_total.dpe_ref;
+    }
+
+    //uma vez selecionados os dados da tipologia predominante, calcular o consumo dos equipamentos
+    horas_total = uso_total.horas_ocupacao;
+    dias_total = uso_total.dias_ocupacao;
+    area_total_construida = document.getElementById('area_construida').value;
+    consumo_equipamentos = dpe_total*area_total_construida*horas_total*dias_total/1000
+
     for (var i = 0; i < rowCount; i++) {
       cargas_real += parseFloat(document.getElementById('cgtt_zona'+i).value)
       cargas_ref += parseFloat(document.getElementById('cgtt_ref'+i).value)
       array_cargas_ref.push((parseFloat(document.getElementById('cgtt_ref'+i).value)))
       dados_zt = uso_zonas.filter(uso => uso.nome == document.getElementById('lista_usos'+i).value)[0] //lista para tomar as informações de dpe e horas de uso
-      consumo_equipamentos+=(parseFloat(document.getElementById('dpe_zona'+i).value)*parseFloat(dados_zt.horas_ocupacao)*parseFloat(document.getElementById('area_zona'+i).value)*parseFloat(dados_zt.dias_ocupacao)/1000)
+      //consumo_equipamentos+=(parseFloat(document.getElementById('dpe_zona'+i).value)*parseFloat(dados_zt.horas_ocupacao)*parseFloat(document.getElementById('area_zona'+i).value)*parseFloat(dados_zt.dias_ocupacao)/1000)
     }
   }
   
@@ -760,9 +784,9 @@ function classificar(){
   if (geracao == NaN || geracao == ''){geracao = 0}
   if (isNaN(aq_real) || isNaN(aq_ref)){aq_real_conta = 0} else{aq_real_conta = aq_real}
   if (isNaN(aq_ref) || isNaN(aq_real)){aq_ref_conta = 0} else {aq_ref_conta = aq_ref} // se um dos dois não for preenchido, o outro não pode entrar na conta do consumo total
-  var CEPreal = parseFloat(consumo_ac_real)*1.6 + parseFloat(aq_real_conta) + parseFloat(consumo_equipamentos*1.6) - parseFloat(geracao)*1.6
-  var CEPref =  parseFloat(consumo_ac_ref)*1.6 + parseFloat(aq_ref_conta) + parseFloat(consumo_equipamentos*1.6)
-  
+  var CEPreal = parseFloat(consumo_ac_real)*1.6 + parseFloat(aq_real_conta) + parseFloat(ilum_real)*1.6 + parseFloat(consumo_equipamentos*1.6) - parseFloat(geracao)*1.6
+  var CEPref =  parseFloat(consumo_ac_ref)*1.6 + parseFloat(aq_ref_conta) + parseFloat(ilum_refD)*1.6 + parseFloat(consumo_equipamentos*1.6)
+
   //definir o tipo de sistema de apoio para selecionar o coeficiente de emissões de CO2 da parte térmica
   var tipo_apoio = document.getElementById('apoio_aq').value
   if(tipo_apoio == 'GLP'){
@@ -912,7 +936,6 @@ function classificar(){
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_ac)+' %'
   }
 
-  
 
   //iluminação
 
@@ -986,7 +1009,6 @@ function classificar(){
     document.getElementById('reducao_emissoes').innerHTML = Number(red_emissoes).toFixed(2); // divide por 1000 para indicar tonelada
   }
   
-
   console.log('CONSUMO DE EQUIPAMENTOS:', consumo_equipamentos)
   document.getElementById('area_resumo').innerHTML = document.getElementById('area_construida').value;
   document.getElementById('nome_ed').innerHTML = document.getElementById('nome_projeto').value;

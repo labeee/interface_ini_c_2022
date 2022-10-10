@@ -26,89 +26,129 @@ var pavimentos = [{'nome': 'Térreo'},
 // lista de coberturas aberturas padrão e suas características
 var aberturas = [{'nome': 'Teste abertura', 'uvid':5.67, 'fs_vid':0.87, 'PAF': 25, 'avs': 25, 'ahs': 70, 'aov': 60},]
 
-var sistemas_ac = [{'nome': 'Split 12000', 'tipo':'baixa_capacidade', 'capacidade':3515, 'tipo_cee':'IDRS', 'valor_cee': 5.5, 'potencia_renovacao': 200},]
+var sistemas_ac = [{'nome': 'Split 12000', 'tipo':'baixa_capacidade', 'capacidade':15, 'tipo_cee':'IDRS', 'valor_cee': 5.5, 'potencia_renovacao': 200},]
 
 function add_vidro(){
+	var erro_vidro = 0
     var nome_vidro = document.getElementById('nome_vidro').value
-    var u_vidro = document.getElementById('u_vidro').value
-    var fs_vidro = document.getElementById('valor_fs').value
-    var dict = {nome: nome_vidro, u_vid: u_vidro, fs_vid: fs_vidro}
-    vidros.push(dict)
+	vidros.forEach(vidro =>{ //verificação se já existe componente com o mesmo nome
+		if(vidro.nome == nome_vidro){
+			window.alert('O componente "' + vidro.nome+'" já existe na base de dados. Caso queira criar um componente diferente, utilize um novo nome!')
+			erro_vidro = 1
+		} 
+	});
+	if (erro_vidro == 1){} // não faz nada
+	else{
+		var u_vidro = document.getElementById('u_vidro').value
+		var fs_vidro = document.getElementById('valor_fs').value
+		var dict = {nome: nome_vidro, u_vid: u_vidro, fs_vid: fs_vidro}
+		vidros.push(dict)
 
-
-
-	//função para atualizar os vidros nas listas:
-	var rowCount = $('#myTable tr').length;
-	var rowCount = rowCount - 1
-	for (var i = 0; i < rowCount; i++) {
-	var selvidros = document.getElementById("lista_vidros"+(i));
-	vidro_a_adicionar = vidros[vidros.length - 1];
-	var optionInc9 = document.createElement("OPTION");
-	optionInc9.innerHTML = vidro_a_adicionar.nome;
-	selvidros.appendChild(optionInc9);
+		//função para atualizar os vidros nas listas:
+		var rowCount = $('#myTable tr').length;
+		var rowCount = rowCount - 1
+		for (var i = 0; i < rowCount; i++) {
+		var selvidros = document.getElementById("lista_vidros"+(i));
+		vidro_a_adicionar = vidros[vidros.length - 1];
+		var optionInc9 = document.createElement("OPTION");
+		optionInc9.innerHTML = vidro_a_adicionar.nome;
+		selvidros.appendChild(optionInc9);
+		}
 	}
+	
 }
 
 
 
 function add_parede(){
+	var erro_parede = 0
     var nome_parede = document.getElementById('nome_parede').value
-	var u_parede = document.getElementById('u_parede').value
-	var ct_parede = document.getElementById('ct_parede').value
-	var ars_parede = document.getElementById('ars_parede').value
-	var dict = {nome: nome_parede, u_par: u_parede, ct_par: ct_parede, ars_par: ars_parede}
-	paredes.push(dict)
+	paredes.forEach(parede =>{ //verificação se já existe componente com o mesmo nome
+		if(parede.nome == nome_parede){
+			window.alert('O componente "' +parede.nome+'" já existe na base de dados. Caso queira criar um componente diferente, utilize um novo nome!')
+			erro_parede = 1
+		} 
+	});
+	if (erro_parede == 1){} // não faz nada
+	else{
+		var u_parede = document.getElementById('u_parede').value
+		var ct_parede = document.getElementById('ct_parede').value
+		var ars_parede = document.getElementById('ars_parede').value
+		var dict = {nome: nome_parede, u_par: u_parede, ct_par: ct_parede, ars_par: ars_parede}
+		paredes.push(dict)
 
-	//função para atualizar as paredes nas listas:
-	var rowCount = $('#myTable tr').length;
-	var rowCount = rowCount - 1
-	for (var i = 0; i < rowCount; i++) {
-	var selparedes = document.getElementById("lista_paredes"+(i));
-	parede_a_adicionar = paredes[paredes.length - 1];
-	var optionInc = document.createElement("OPTION");
-	optionInc.innerHTML = parede_a_adicionar.nome;
-	selparedes.appendChild(optionInc);
+		//função para atualizar as paredes nas listas:
+		var rowCount = $('#myTable tr').length;
+		var rowCount = rowCount - 1
+		for (var i = 0; i < rowCount; i++) {
+		var selparedes = document.getElementById("lista_paredes"+(i));
+		parede_a_adicionar = paredes[paredes.length - 1];
+		var optionInc = document.createElement("OPTION");
+		optionInc.innerHTML = parede_a_adicionar.nome;
+		selparedes.appendChild(optionInc);
+		}
 	}
 }
 
 function add_cob(){
+	var erro_cob = 0
     var nome_cob = document.getElementById('nome_cob').value
-	var u_cobertura = document.getElementById('u_cob').value
-	var ct_cobertura = document.getElementById('ct_cob').value
-	var ars_cobertura = document.getElementById('ars_cob').value
-	var dict = {nome: nome_cob, u_cob: u_cobertura, ct_cob: ct_cobertura, ars_cob: ars_cobertura}
-	coberturas.push(dict)
-	
-	//função para atualizar as coberturas nas listas
-	var rowCount = $('#myTable tr').length;
-	var rowCount = rowCount - 1
-	for (var i = 0; i < rowCount; i++) {
-	var selcobs = document.getElementById("lista_coberturas"+(i));
-	cob_a_adicionar = coberturas[coberturas.length - 1];
-	var optionInc = document.createElement("OPTION");
-	optionInc.innerHTML = cob_a_adicionar.nome;
-	selcobs.appendChild(optionInc);
+	coberturas.forEach(cobertura =>{ //verificação se já existe componente com o mesmo nome
+		if(cobertura.nome == nome_cob){
+			window.alert('O componente "' +cobertura.nome+'" já existe na base de dados. Caso queira criar um componente diferente, utilize um novo nome!')
+			erro_cob = 1
+		} 
+	});
+	if (erro_cob == 1){} // não faz nada
+	else{
+		var u_cobertura = document.getElementById('u_cob').value
+		var ct_cobertura = document.getElementById('ct_cob').value
+		var ars_cobertura = document.getElementById('ars_cob').value
+		var dict = {nome: nome_cob, u_cob: u_cobertura, ct_cob: ct_cobertura, ars_cob: ars_cobertura}
+		coberturas.push(dict)
+		
+		//função para atualizar as coberturas nas listas
+		var rowCount = $('#myTable tr').length;
+		var rowCount = rowCount - 1
+		for (var i = 0; i < rowCount; i++) {
+		var selcobs = document.getElementById("lista_coberturas"+(i));
+		cob_a_adicionar = coberturas[coberturas.length - 1];
+		var optionInc = document.createElement("OPTION");
+		optionInc.innerHTML = cob_a_adicionar.nome;
+		selcobs.appendChild(optionInc);
+		}
 	}
 }
 
 function add_ac(){
+	var erro_ac = 0
     var nome_ac = document.getElementById('nome_sistema_ac').value
-	var tipo_ac = document.getElementById('tipo_sistema').value
-    var capacidade_ac = document.getElementById('capacidade_ac').value
-    var tipo_coeficiente= document.getElementById('tipo_cee').value
-	var pot_renovacao = document.getElementById('renovacao_ac').value
-    var dict = {nome: nome_ac, tipo:tipo_ac, capacidade: capacidade_ac, tipo_cee: tipo_coeficiente, potencia_renovacao:pot_renovacao}
-    sistemas_ac.push(dict)
+	sistemas_ac.forEach(sistema =>{ //verificação se já existe componente com o mesmo nome
+		if(sistema.nome == nome_ac){
+			window.alert('O componente "' +sistema.nome+'" já existe na base de dados. Caso queira criar um componente diferente, utilize um novo nome!')
+			erro_ac = 1
+		} 
+	});
+	if (erro_ac == 1){} // não faz nada
+	else{
+		var tipo_ac = document.getElementById('tipo_sistema').value
+		var capacidade_ac = document.getElementById('capacidade_ac').value
+		var tipo_coeficiente= document.getElementById('tipo_cee').value
+		var valor_coeficiente = document.getElementById('valor_cee').value
+		var pot_renovacao = document.getElementById('renovacao_ac').value
+		var dict = {nome: nome_ac, tipo:tipo_ac, capacidade: capacidade_ac, tipo_cee: tipo_coeficiente, valor_cee:valor_coeficiente, potencia_renovacao:pot_renovacao}
+		sistemas_ac.push(dict)
 
-	//função para atualizar os sistemas de AC nas listas:
-	var rowCount = $('#myTable tr').length;
-	var rowCount = rowCount - 1
-	for (var i = 0; i < rowCount; i++) {
-	var sel_ac = document.getElementById("ac_zona"+(i));
-	ac_a_adicionar = sistemas_ac[sistema_ac.length - 1];
-	var optionInc50 = document.createElement("OPTION");
-	optionInc50.innerHTML = ac_a_adicionar.nome;
-	sel_ac.appendChild(optionInc50);
+		//função para atualizar os sistemas de AC nas listas:
+		var rowCount = $('#myTable tr').length;
+		var rowCount = rowCount - 1
+		for (var i = 0; i < rowCount; i++) {
+		var sel_ac = document.getElementById("ac_zona"+(i));
+		ac_a_adicionar = sistemas_ac[sistemas_ac.length - 1];
+		var optionInc510 = document.createElement("OPTION");
+		optionInc510.innerHTML = ac_a_adicionar.nome;
+		sel_ac.appendChild(optionInc510);
+		}
 	}
 }
 

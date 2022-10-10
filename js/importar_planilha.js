@@ -7,7 +7,7 @@ function GetTableFromExcel(data) {
         });
 
         //importação das informações iniciais
-            var linhas_gerais = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Resumo']).slice(2,);
+            var linhas_gerais = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Geral']).slice(2,);
             //nome do projeto
             document.getElementById('nome_projeto').value = linhas_gerais[0].__EMPTY_2
             //tipologia predominante
@@ -54,6 +54,18 @@ function GetTableFromExcel(data) {
             
             //área construída 
             document.getElementById('area_construida').value = linhas_gerais[8].__EMPTY_2;
+
+            //dpe_detalhada
+            document.getElementById('dpe_detalhado').value = linhas_gerais[11].__EMPTY_2;
+            if(linhas_gerais[11].__EMPTY_2=='Sim'){
+                document.getElementById('dpe_levantada').style.display = 'block';
+                document.getElementById('label_detalhado').style.display = 'block';
+                document.getElementById('dpe_levantada').value = linhas_gerais[14].__EMPTY_2
+            }
+            else if (linhas_gerais[11].__EMPTY_2=='Não'){
+                document.getElementById('dpe_levantada').style.display = 'none';
+                document.getElementById('label_detalhado').style.display = 'none';
+            }
 
 
         //tomar dados de iluminação 
@@ -148,7 +160,7 @@ function GetTableFromExcel(data) {
             }
 
         //pegar os componentes construtivos preenchidos na tabela, para que sejam inseridos como uma lista na opção de envoltória
-        var excelRows2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Aux_Componente']).slice(6,); //as 6 primeiras são as linhas antes das informações dos componentes
+        var excelRows2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets['Componentes']).slice(6,); //as 6 primeiras são as linhas antes das informações dos componentes
 
         for (row of excelRows2){
             //como as primeiras colunas não tem nome, elas são nomeadas como __EMPTY_número da coluna, assim, para a verificação se existe valores preenchidos, foram usados os valores de row.EMPTY_número; se houvesse nome nas colunas, seria pelo nome das colunas
@@ -411,17 +423,19 @@ function GetTableFromExcel(data) {
                 travar_array = ['orientacoes', 'lista_vidros', 'lista_paredes', 'avs_zona', 'ahs_zona', 'aov_zona', 'paf_zona']
                 
                 if (tipos_preencher[i] =='Interna') {
+                    //primeiro trava a condição da fachada
+                    document.getElementById('fachada'+i).value = 'Não'
+                    document.getElementById('fachada'+i).style.background = '#F5F5F5';
+                    document.getElementById('fachada'+i).disabled = true;
+
+                    //depois retira os valores e trava as demais condições
                     for (travar of travar_array){                                                       
                     document.getElementById(travar+i).value = '';
                     document.getElementById(travar+i).style.background = '#F5F5F5';
                     document.getElementById(travar+i).disabled = true;
                     } 
                 }
-
-                
                 //cobertura não exposta
-
-                    
                 if (cond_cob_preencher[i] =='Não exposta') {                               
                     document.getElementById('lista_coberturas'+i).value = '';
                     document.getElementById('lista_coberturas'+i).style.background = '#F5F5F5';

@@ -25,7 +25,7 @@ function remover_zona(clicked_id) {
     }
 }
 
-//função de inserção dos dados na tabela 
+//função de inserção dos dados na tabela p
 //inserir as td e seus ids dentro de cada nova linha 
 function inserir_tabela() {
     var table = document.getElementById("myTable");
@@ -62,7 +62,7 @@ function inserir_tabela() {
     //alterações na forma, nomes dos ids e posições também devem ser alteradas em importar_planilha.js
 
     cell1.innerHTML = '<input id="lista_pavimentos'+(rowCount)+'" type="text">'; //colocar como select?
-    cell2.innerHTML = '<input id="nome_zona'+rowCount+'" type="text" value="zona '+rowCount+'">';
+    cell2.innerHTML = '<input id="nome_zona'+rowCount+'" type="text" value="zona'+(rowCount+1)+'">';
     cell3.innerHTML = '<input id="area_zona'+rowCount+'" type="number" min="0" max="10000">';
     cell4.innerHTML = '<input id="pd_zona'+rowCount+'" type="number" min="2.6" max="6.6">';
     cell5.innerHTML = '<select id="tipo_zona'+rowCount+'"><option value="Perimetral">Perimetral</option><option value="Interna">Interna</option></select>';
@@ -73,7 +73,7 @@ function inserir_tabela() {
     cell10.innerHTML = '<select id="lista_paredes'+(rowCount)+'"></select>'
     cell11.innerHTML = '<select id="lista_coberturas'+(rowCount)+'"></select>'
     cell12.innerHTML = '<select id="lista_vidros'+(rowCount)+'"></select>'
-    cell13.innerHTML = '<input id="paf_zona'+(rowCount)+'" type="number" min="0" max="90">';
+    cell13.innerHTML = '<input id="paf_zona' +(rowCount)+'" type="number" min="0" max="90">';
     cell14.innerHTML = '<select id="fachada'+rowCount+'"><option value="Sim">Sim</option><option value="Não">Não</option></select>';
     cell15.innerHTML = '<input id="avs_zona'+(rowCount)+'" type="number" min="0" max="90">';
     cell16.innerHTML = '<input id="ahs_zona'+(rowCount)+'" type="number" min="0" max="90">';
