@@ -81,6 +81,12 @@
 
 }
 
+.pressionado {
+    background-color: #ADD2E2;
+    font-weight: bold;
+    color:black;
+
+}
 .nav-buttons:hover {
     background-color: #ADD2E2;
     font-weight: bold;
@@ -224,14 +230,17 @@
   }
 
   .btn-limpar-dados {
-    margin-top: 1vh;
-    width: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
   }
 
   .btn-prox-etapa {
-   margin-top: 1vh;
-   width: 4vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
   }
 
   #div-btn-envo {
@@ -344,6 +353,7 @@
         font-size: 0.8rem;
     }
 
+
     #titulo {
         font-size: 1.3rem;
     }
@@ -363,4 +373,3 @@
     }
  
   }
-  
