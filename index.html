@@ -41,7 +41,6 @@
 	<script src="js/limites.js"></script>
 	<!--script para limpar e passar para a próxima-->
 	<script src="js/limpar_proxima.js"></script>
-	
 
 </head>
 
@@ -58,10 +57,11 @@
 
 		<!-- Abas laterais, implementadas com bootstrap -->
 		
-		<div id="sidebar">
+		<div id="sidebar">	
+
 			<div class="nav flex-column nav-custom" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
-				<a class="nav-link nav-buttons" id="geral-tab" data-toggle="pill" href="#geral-content">
+				<a class="nav-link nav-buttons pressionado" id="geral-tab" data-toggle="pill" href="#geral-content">
 					<img src="img/icone_12.svg" style="width:2vh;margin-right: 1vh;">Geral</img>
 				</a>
 
@@ -124,6 +124,8 @@
 									<label>Fator de Forma:</label><br>
 									<label>Tipologia predominante:</label><br>
 									<label>Área construída total (m²):</label><br>
+									<label>Levantamento de detalhado da DPE?</label><br>
+									<label id="label_detalhado" style="display:none">DPE levantado (W/m²)</label><br>
 
 									<div style="margin-top:6vh">
 										<input type="file" id="fileUpload" accept=".xlsx" style="display: none;" onchange="atualizar()" />
@@ -199,7 +201,15 @@
 									<br>
 
 									<input type="number" min="0" id="area_construida" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-								
+				
+									<select id="dpe_detalhado" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
+										<option value="Não">Não</option><option value="Sim">Sim</option>
+									</select>
+
+									<input type="number" min="0" id="dpe_levantada" style="background-color:#F0F0F0;border:1px solid #D0D0D0;display: none;">
+									<script>
+
+									</script>
 								</div>
 
 								</div>
@@ -241,6 +251,7 @@
 							<h3 style="font-weight: bolder">Envoltória</h3>
 						</div>
 						<div class="col-1">
+							<button type="button" class="btn btn-light" onclick="back_env()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light"  onclick="clear_env()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;"></button>
 							<button type="button" class="btn btn-light" onclick="next_env()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
@@ -309,26 +320,26 @@
 									<table id="myTable" style="background-color: #FFFFFF; width:95%; " class="table table-bordered table-hover">
 										<thead>
 											<tr>
-												<th class="col-md-2">Pavimento</th>
-												<th class="col-md-2">Zona térmica</th>
-												<th class="col-md-2">Área (m²)</th>
-												<th class="col-md-2">Pé-direito (m)</th>
-												<th class="col-md-2">Tipo de zona</th>
-												<th class="col-md-2">Orientação solar</th>
-												<th class="col-md-2">Uso da zona</th>
-												<th class="col-md-2">Condição do piso</th>
-												<th class="col-md-2">Cobertura exposta</th>
-												<th class="col-md-2">Parede <i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ParedeModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2">Cobertura<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#CoberturaModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2">Vidros<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#VidroModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2" data-toggle="popover" data-content="Percentual de Abertura da Fachada"> PAF</th>
-												<th class="col-md-2" data-toggle="popover"data-content="Indique se a fachada da zona térmica descrita compõe a fachada principal. Este requisito é importante pois o PAF da condição de referência pode variar entre a fachada principal e as demais fachadas">Fachada principal</th>
-												<th class="col-md-2" data-toggle="popover" data-content="Ângulo vertical de sombreamento (º)">AVS (°)</th>
-												<th class="col-md-2" data-toggle="popover" data-content="Ângulo horizontal de sombreamento (º)">AHS (°)</th>
-												<th class="col-md-2" data-toggle="popover" data-content="Ângulo de Obstrução Vertical (º)">AOV (°)</th>
-												<th class="col-md-2" data-toggle="popover" data-content="Densidade de potência de iluminação (W/m²)">DPI (W/m²)</th>
-												<th class="col-md-2" data-toggle="popover" data-content="Densidade de potência de equipamentos (W/m²)">DPE (W/m²)</th>
-												<th class="col-md-2">Sistema de condicionamento<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ACModal"></i></th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Adicionar um pavimento, por exemplo: Térreo, Tipo ou Cobertura">Pavimento</th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Adicionar uma zona térmica">Zona térmica</th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever a área da zona térmica, em m²">Área (m²)</th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever o pé-direito da zona térmica (em metros, varia de 2.6m a 6.6m)">Pé-direito (m)</th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever o tipo da zona térmica">Tipo de zona</th>
+												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever a orientação solar da zona térmica">Orientação solar</th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever o uso da zona térmica">Uso da zona</th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever a condição de exposição do piso">Condição do piso</th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever a condição de exposição da cobertura">Cobertura exposta</th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo das Paredes Externas">Parede Externa<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ParedeModal" onclick="limite_modais()"></i></th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo da Cobertura">Cobertura<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#CoberturaModal" onclick="limite_modais()"></i></th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo dos Vidros">Vidros<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#VidroModal" onclick="limite_modais()"></i></th>
+												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Percentual de Abertura da Fachada (em Porcentagem (%), varia de 0 a 90%)"> PAF (%)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Indique se a fachada da zona térmica descrita compõe a fachada principal. Este requisito é importante pois o PAF da condição de referência pode variar entre a fachada principal e as demais fachadas">Fachada principal</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Ângulo vertical de sombreamento (em °, varia de 0 a 90°)">AVS (°)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Ângulo horizontal de sombreamento (em °, varia de 0 a 90°)">AHS (°)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Ângulo de Obstrução Vertical (em °, varia de 0 a 90°)">AOV (°)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Densidade de potência de iluminação (em W/m², varia de 0 a 40W/m²)">DPI (W/m²)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Densidade de potência de equipamentos (em W/m², varia de 0 a 40W/m²)">DPE (W/m²)</th>
+												<th class="col-md-2" data-toggle="tooltip" title="Definir o sistema de condicionamento de ar">Sistema de condicionamento<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ACModal" onclick="limite_modais()"></i></th>
 												<th class="col-md-2" style="background-color: #d1edee;">Carga térmica real (kWh/ano)</th>
 												<th class="col-md-2" style="background-color:#D2D2D2;">Carga térmica referência (kWh/ano)</th> <!--coluna para as cargas de referência-->
 												<th style="background-color:#F5F5F5;border-color: #F5F5F5;"></th> <!--coluna para as o botão remover-->
@@ -372,6 +383,7 @@
 						</div>
 
 						<div class="col-1">
+							<button type="button" class="btn btn-light" onclick="back_ilum()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="clear_ilum()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="next_ilum()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
@@ -386,8 +398,8 @@
 								<input type="number" class="form-control" style="width:250vhx;margin-bottom:10px" id="iluminacao_referencia" />
 							<label>Consumo de iluminação na condição Real (kWh/ano):</label>
 								<input type="number"  class="form-control" style="width:250vhx;" id="iluminacao_real" />
-							<label style="margin-top:10px" >Coeficiente i (%) [intervalo entre as classes]:</label>
-								<input type="number" min="0" max="1" class="form-control" style="width:250vhx;margin-bottom:10px" id="iluminacao_i" />
+							<label style="margin-top:10px" >Coeficiente i (%):</label>
+								<input data-toggle="tooltip" data-placement="bottom" title="Intervalo entre as classes A e D (varia de 0 a 100)" type="number" min="0" max="100" class="form-control" style="width:250vhx;margin-bottom:10px" id="iluminacao_i" />
 			
 						</div>
 
@@ -403,6 +415,7 @@
 						</div>
 	
 						<div class="col-1">
+							<button type="button" class="btn btn-light" onclick="back_aq()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="clear_aq()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="next_aq()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 						</div>
@@ -435,6 +448,7 @@
 							<h3 style="font-weight: bolder">Geração de Energia</h3>
 						</div>
 						<div class="col-1">
+							<button type="button" class="btn btn-light" onclick="back_ge()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="clear_ge()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="next_ge()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
@@ -471,6 +485,7 @@
 						</div>
 
 						<div class="col-1">
+							<button type="button" class="btn btn-light" onclick="back_ac()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="clear_ac()"><img  class="btn-limpar-dados" src="img/icone_02.svg" style="width: 15px;height:15px;" ></button>
 							<button type="button" class="btn btn-light" onclick="next_ac()"><img class="btn-prox-etapa" src="img/icone_01.svg" style="width: 15px;height:15px;" ></button>
 
@@ -548,12 +563,18 @@
 
 				<div class="tab-pane fade"  id="resultados-content" role="tabpanel">
 				<!--Conteúdo da aba de resultados-->
+					<script>
+						function funcao_inexistente(){
+							window.alert('Funcionalidade em desenvolvimento, por favor aguarde!')
+						}
+					</script>
 					<div style="margin:2vh;">
 						<h3 style="font-weight: bolder"> Classificação de Eficiência Energética</h3>
 						<button style="margin-right:1.5%;width: 10%;" class="btn btn-primary" onclick="classificar()" >CLASSIFICAR</button>	
-						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="classificar()">Baixar planilha</button>	
-						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="classificar()">Baixar PDF</button>	
+						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="funcao_inexistente()">Baixar planilha</button>	
+						<button style="margin-right:1.5%;width: 10%;" class="btn btn-info" onclick="funcao_inexistente()">Baixar PDF</button>	
 
+					
 					</div>
 					
 			
@@ -761,9 +782,9 @@
         <div id='modal_vidros' class="modal-body">
 			<label>Nome do vidro</label>
             <input id="nome_vidro" type="text" class="form-control">
-            <label>Transmitância térmica do vidro</label>
+            <label>Transmitância térmica do vidro (W/m²K)</label>
             <input id="u_vidro" type="number" max='5.7' min="0" class="form-control">
-			<label>Fator solar do vidro</label>
+			<label>Fator solar do vidro (adimensional)</label>
             <input id="valor_fs" type="number" max='0.87' min="0" class="form-control">
         </div>
         <div class="modal-footer">
@@ -787,11 +808,11 @@
         <div id='modal_paredes' class="modal-body">
 			<label>Nome da parede</label>
             <input id="nome_parede" type="text" class="form-control">
-            <label>Transmitância térmica da parede</label>
+            <label>Transmitância térmica da parede (W/m²K)</label>
             <input id="u_parede" type="number" max='5.7' min="0" class="form-control">
-			<label>Capacidade térmica da parede</label>
+			<label>Capacidade térmica da parede (kJ/m²K)</label>
             <input id="ct_parede" type="number" max='220' min="0"  class="form-control">
-			<label>Absortância à radiação solar da parede</label>
+			<label>Absortância à radiação solar da parede (adimensional)</label>
             <input id="ars_parede" type="number" max='0.8' min="0"  class="form-control">
         </div>
         <div class="modal-footer">
@@ -817,11 +838,11 @@
         <div id='modal_cobertura' class="modal-body">
 			<label>Nome da cobertura</label>
             <input id="nome_cob" type="text" class="form-control">
-            <label>Transmitância térmica da cobertura</label>
+            <label>Transmitância térmica da cobertura (W/m²K)</label>
             <input id="u_cob" type="number" max='5.07' min="0"  class="form-control">
-			<label>Capacidade térmica da cobertura</label>
+			<label>Capacidade térmica da cobertura (kJ/m²K)</label>
             <input id="ct_cob" type="number" max='220' min="0"  class="form-control">
-			<label>Absortância à radiação solar da cobertura</label>
+			<label>Absortância à radiação solar da cobertura (adimensional)</label>
             <input id="ars_cob" type="number" max='0.8' min="0" class="form-control">
 			
         </div>
@@ -851,9 +872,9 @@
 			<label>Tipo de Sistema</label>
             <select class="form-control" id="tipo_sistema">
 				<option value="baixa_capacidade">Baixa capacidade (até 17.6kW)</option>
-				<option value="Alta capacidade">Alta capacidade (acima de 17.6kW)</option>
+				<option value="alta_capacidade">Alta capacidade (acima de 17.6kW)</option>
 			</select>
-            <label>Potência unitária de Resfriamento (kW)</label>
+            <label>Capacidade unitária de Resfriamento (kW)</label>
             <input class="form-control" min="0" id="capacidade_ac" type="number">
 			<label>Tipo coeficiente de eficiência energética</label>
             <select class="form-control" id="tipo_cee">
