@@ -931,7 +931,7 @@ function classificar(){
   }
   
   else{
-    document.getElementById('consumo_ac').innerHTML = Math.round(consumo_ac_real*1.6) + ' kWh/ano' 
+    document.getElementById('consumo_ac').innerHTML = Number(consumo_ac_real*1.6).toFixed(2) + ' kWh/ano' 
     document.getElementById('img_ac').src = 'img/Class'+classificacao_sistema_ac+'.svg'
     document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_ac)+' %'
   }
@@ -954,7 +954,7 @@ function classificar(){
   }
 
   else{
-    document.getElementById('consumo_iluminacao').innerHTML = ilum_real*1.6 + ' kWh/ano' 
+    document.getElementById('consumo_iluminacao').innerHTML = Number(ilum_real*1.6).toFixed(2) + ' kWh/ano' 
     document.getElementById('img_iluminacao').src = 'img/Class'+classificacao_ilum+'.svg'
     document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_iluminacao)+' %'
   }
@@ -975,7 +975,7 @@ function classificar(){
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: - %'
   }
   else{
-    document.getElementById('consumo_aq').innerHTML = aq_real + ' kWh/ano' 
+    document.getElementById('consumo_aq').innerHTML = Number(aq_real).toFixed(2) + ' kWh/ano' 
     document.getElementById('img_aq').src = 'img/Class'+classificacao_sistema_aq+'.svg'
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_aq)+' %'
   }
