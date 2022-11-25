@@ -12,19 +12,16 @@
 	<!--link de estilo local-->
 	<link rel="stylesheet" href="css/estilo.css">
 	<!-- link de estilos do boootstrap -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<!-- link do font awesome-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+	<link rel="stylesheet" href="css/bootstrap/bootstap.css">
 
 	<!--SCRIPTS IMPORTADOS-->
 	<!-- scripts do bootstrap -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="js/jquery/jquery321.js"></script>
+	<script src="js/bootstrap/BS.js" ></script>
+
 	<!--scripts de importação de planilhas-->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+	<script type="text/javascript" src="js/sheetJs/xlsxfull.js"></script>
+	<script type="text/javascript" src="js/sheetJs/jszip.js"></script>
 	<script src="js/importar_planilha.js"></script>
 	<!--script do onnxjs-->
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
@@ -41,6 +38,9 @@
 	<script src="js/limites.js"></script>
 	<!--script para limpar e passar para a próxima-->
 	<script src="js/limpar_proxima.js"></script>
+	<!--script para a edição dos componentes-->
+	<script src="js/editar_componentes.js"></script>
+	<script src="js/pos_calculo.js"></script>
 
 </head>
 
@@ -64,7 +64,7 @@
 				<a class="nav-link nav-buttons pressionado" id="geral-tab" data-toggle="pill" href="#geral-content">
 					<img src="img/icone_12.svg" style="width:2vh;margin-right: 1vh;">Geral</img>
 				</a>
-
+				
 				<a class="nav-link nav-buttons" id="env-tab" data-toggle="pill" href="#env-content">
 					<img src="img/icone_11.svg" style="width:2vh;margin-right: 1vh;">Envoltória</img>
 				</a>
@@ -120,17 +120,19 @@
 									<label>Identificação do projeto:</label> <br>
 									<label>Estado:</label><br>
 									<label>Cidade:</label><br>
-									<label>Sistema de fornecimento de eletricidade:</label><br>
-									<label>Fator de Forma:</label><br>
 									<label>Tipologia predominante:</label><br>
 									<label>Área construída total (m²):</label><br>
+									<label>Fator de Forma:</label><br>
+									<label>Tipo de sistema de condicionamento de ar</label><br>
+									<label>PHOCT (%)</label><br>
+									<label>Sistema de fornecimento de eletricidade:</label><br>
 									<label>Levantamento de detalhado da DPE?</label><br>
 									<label id="label_detalhado" style="display:none">DPE levantado (W/m²)</label><br>
 
 									<div style="margin-top:6vh">
 										<input type="file" id="fileUpload" accept=".xlsx" style="display: none;" onchange="atualizar()" />
-										<input id="btn-upload" class='btn btn-secondary'type="button" value="Faça upload da sua planilha" onclick="document.getElementById('fileUpload').click();" />
-										<br><a style="font-size:1.5vh" href="ANEXO_I.6.xlsx">Clique aqui para baixar a planilha</a>
+										<input id="btn-upload" class='btn btn-secondary'type="button" value="Faça upload da sua planilha" onclick="document.getElementById('fileUpload').click();"/>
+										<br><a style="font-size:1.5vh" href="INI_C-input_interface.xlsx">Clique aqui para baixar a planilha</a>
 									</div>
 							</div>
 							<div class="col-4" style="position:relative;right:25%;">
@@ -176,16 +178,7 @@
 
 									<!--Cidade. Cidade está vinculada à função que as lista após a escolha do estado-->
 									<select  name="city" id="cidades" style="background-color:#F0F0F0;border:1px solid #D0D0D0;"></select>
-									<br>
-									
-									<!--sistema de geração-->
-									<select id="sistema_eletricidade" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-										<option value="Sistema Interligado Nacional">Sistema Interligado Nacional</option><option value="Sistemas Isolados">Sistemas Isolados</option>
-									</select>
-
-									<!--fator de forma-->
-									<input type="number" min="0" max="1" id="fator_de_forma" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-									<br>
+									<br>								
 
 									<!--Tipologia Predominante:-->
 									<select id="tipo_predominante" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
@@ -200,16 +193,30 @@
 									</select>
 									<br>
 
-									<input type="number" min="0" id="area_construida" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
-				
+									<!--Área construída:-->
+									<input type="number" min="0" id="area_construida" style="background-color:#F0F0F0;border:1px solid #D0D0D0;"><br>
+
+									<!--fator de forma-->
+									<input type="number" min="0" max="1" id="fator_de_forma" step="0.01" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
+									<br>
+
+									<!--Sistema de condicionamento:-->
+									<select id="tipo_condicionamento" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
+										<option value="AC">Condicionada artificialmente</option><option value="VN">Naturalmente ventilada </option><option value="HB">Híbrida </option>
+									</select>
+
+									<!--PHOCT-->
+									<input type="number" min="0" max="100" id="phoct" style="background-color:#F0F0F0;border:1px solid #D0D0D0;" disabled value="0">
+									<br>
+									<!--sistema de geração-->
+									<select id="sistema_eletricidade" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
+										<option value="Sistema Interligado Nacional">Sistema Interligado Nacional</option><option value="Sistemas Isolados">Sistemas Isolados</option>
+									</select>
+									<!--DPE detalhado-->
 									<select id="dpe_detalhado" style="background-color:#F0F0F0;border:1px solid #D0D0D0;">
 										<option value="Não">Não</option><option value="Sim">Sim</option>
 									</select>
-
 									<input type="number" min="0" id="dpe_levantada" style="background-color:#F0F0F0;border:1px solid #D0D0D0;display: none;">
-									<script>
-
-									</script>
 								</div>
 
 								</div>
@@ -259,7 +266,7 @@
 
 					</div>
 
-					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
+					<div class="card m-3" id='div_check_env'style="background-color: #F5F5F5;width:40%;">
 
 						<div class="card-body">
 		
@@ -305,8 +312,8 @@
 							<!-- as função inserir tabela está em inserir_tabela.js, a função importar componentes está em modal_componentes.js, a função carregar_usos está em get_array_e_calcular.js-->
 							<a style='margin:1em;color:#FFFF' type="button" class="btn btn-secondary" onclick="inserir_tabela(); carregar_usos();adicionar_limites()">
 								+ Zona térmica</a>
-							<button type="button"  onclick='calcular()' class="btn btn-success">Calcular</button>
-								
+							
+							<button type="button"  onclick='calcular();teste()' class="btn btn-success">Calcular</button>
 						</div>
 					</div>
 
@@ -314,42 +321,40 @@
 
 						<!-- Tab panes -->
 						<div >
-							<!--POPOVER BOOTSTRAP para explicações das entradas?-->	       
 							<div style="margin:0.5vh;font-weight: bold;overflow-x: auto;" class="table-responsive-sm">
 							<div>
+									
 									<table id="myTable" style="background-color: #FFFFFF; width:95%; " class="table table-bordered table-hover">
 										<thead>
 											<tr>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Adicionar um pavimento, por exemplo: Térreo, Tipo ou Cobertura">Pavimento</th>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Adicionar uma zona térmica">Zona térmica</th>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever a área da zona térmica, em m²">Área (m²)</th>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever o pé-direito da zona térmica (em metros, varia de 2.6m a 6.6m)">Pé-direito (m)</th>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever o tipo da zona térmica">Tipo de zona</th>
-												<th class="col-md-2"  data-toggle="tooltip" data-placement="bottom" title="Descrever a orientação solar da zona térmica">Orientação solar</th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever o uso da zona térmica">Uso da zona</th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever a condição de exposição do piso">Condição do piso</th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Descrever a condição de exposição da cobertura">Cobertura exposta</th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo das Paredes Externas">Parede Externa<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ParedeModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo da Cobertura">Cobertura<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#CoberturaModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo dos Vidros">Vidros<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#VidroModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2" data-toggle="tooltip" data-placement="bottom" title="Percentual de Abertura da Fachada (em Porcentagem (%), varia de 0 a 90%)"> PAF (%)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Indique se a fachada da zona térmica descrita compõe a fachada principal. Este requisito é importante pois o PAF da condição de referência pode variar entre a fachada principal e as demais fachadas">Fachada principal</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Ângulo vertical de sombreamento (em °, varia de 0 a 90°)">AVS (°)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Ângulo horizontal de sombreamento (em °, varia de 0 a 90°)">AHS (°)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Ângulo de Obstrução Vertical (em °, varia de 0 a 90°)">AOV (°)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Densidade de potência de iluminação (em W/m², varia de 0 a 40W/m²)">DPI (W/m²)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Densidade de potência de equipamentos (em W/m², varia de 0 a 40W/m²)">DPE (W/m²)</th>
-												<th class="col-md-2" data-toggle="tooltip" title="Definir o sistema de condicionamento de ar">Sistema de condicionamento<i class="fa-solid fa-circle-plus" data-toggle="modal" data-target="#ACModal" onclick="limite_modais()"></i></th>
-												<th class="col-md-2" style="background-color: #d1edee;">Carga térmica real (kWh/ano)</th>
-												<th class="col-md-2" style="background-color:#D2D2D2;">Carga térmica referência (kWh/ano)</th> <!--coluna para as cargas de referência-->
-												<th style="background-color:#F5F5F5;border-color: #F5F5F5;"></th> <!--coluna para as o botão remover-->
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Adicionar um pavimento, por exemplo: Térreo, Tipo ou Cobertura">Pavimento</th>
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Adicionar uma zona térmica">Zona térmica</th>
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Descrever a área da zona térmica, em m²">Área (m²)</th>
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Descrever o pé-direito da zona térmica (em metros, varia de 2.6m a 6.6m)">Pé-direito (m)</th>
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Descrever o tipo da zona térmica">Tipo de zona</th>
+												<th class="col-md-2 help"  data-toggle="tooltip" data-placement="bottom" title="Descrever a orientação solar da zona térmica">Orientação solar</th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Descrever a relação com Zonas térmicas INTERNAS adjacentes">Relação com Zonas térmicas INTERNAS adjacentes</th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Descrever o uso da zona térmica">Uso da zona</th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo das Paredes Externas">Parede Externa <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#ParedeExtModal" onclick="limite_modais(),listar_paredes_ext_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo das Paredes Externas">Parede Interna  <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#ParedeIntModal" onclick="limite_modais(),listar_paredes_int_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo da Cobertura">Cobertura <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#CoberturaModal" onclick="limite_modais(), listar_coberturas_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo da Cobertura">Piso <br> <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#pisoModal" onclick="limite_modais(), listar_pisos_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo dos Vidros">Vidros <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#VidroModal" onclick="limite_modais(), listar_vidros_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Percentual de Abertura da Fachada (em Porcentagem (%), varia de 0 a 90%)"> PAF (%)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Indique se a fachada da zona térmica descrita compõe a fachada principal. Este requisito é importante pois o PAF da condição de referência pode variar entre a fachada principal e as demais fachadas">Fachada principal</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Ângulo vertical de sombreamento (em °, varia de 0 a 90°)">AVS (°)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Ângulo horizontal de sombreamento (em °, varia de 0 a 90°)">AHS (°)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Ângulo de Obstrução Vertical (em °, varia de 0 a 90°)">AOV (°)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Densidade de potência de equipamentos (em W/m², varia de 0 a 40W/m²)">PAZ (%)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" data-placement="bottom" title="Definir o componente construtivo dos Vidros">Vidros abertura zenital <br> <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#VidroAZModal" onclick="limite_modais(),listar_vidros_az_editaveis()"></th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Densidade de potência de iluminação (em W/m², varia de 0 a 40W/m²)">DPI (W/m²)</th>
+												<th class="col-md-2 help" data-toggle="tooltip" title="Definir o sistema de condicionamento de ar">Sistema de condicionamento <img src="img/add.svg" class="icone_add" data-toggle="modal" data-target="#ACModal" onclick="limite_modais(), listar_ac_editaveis()"></th>
+												<th class="col-md-2 help" style="background-color: #d1edee;">Carga térmica real (kWh/ano)</th>
+												<th class="col-md-2 help" style="background-color:#D2D2D2;">Carga térmica referência (kWh/ano)</th> <!--coluna para as cargas de referência-->
+												<th style="background-color:#F5F5F5;border-color: #F5F5F5;"></th> <!--coluna para o botão remover-->
+												<th style="background-color:#F5F5F5;border-color: #F5F5F5;"></th> <!--coluna para o botão duplicar-->
 											</tr>
-											<script> // script do popover, usado para explicar algumas variáveis
-												$(document).ready(function(){
-												$('[data-toggle="popover"]').popover();
-												});
-												
-											</script>
+
 										</thead>
 										<tbody style="text-align:center">
 											<!--importação da função de inserção de tabelas pelo modal-->
@@ -366,6 +371,7 @@
 									});
 									});
 								</script>
+								
 							</div>
 
 
@@ -379,7 +385,14 @@
 				<div class="tab-pane fade" id="ilum-content" role="tabpanel">
 					<div class="row m-3 p-3">
 						<div class="col-11">
-							<h3 style="font-weight: bolder;">Iluminação</h3>
+							<h3 style="font-weight: bolder;">Iluminação</h3>						
+							<div>
+								<!-- switch -->
+								<label class="switch">
+									<input id ='sw_iluminacao' type="checkbox" checked>
+									<span class="slider round"></span>
+								</label>
+							</div>
 						</div>
 
 						<div class="col-1">
@@ -389,8 +402,7 @@
 
 						</div>
 					</div>
-
-
+						
 					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
 						<div class="card-body" id='iluminacao_valores'>
 						
@@ -412,7 +424,15 @@
 					<div class="row m-3 p-3">
 						<div class="col-11">
 							<h3 style="font-weight: bolder">Aquecimento de Água</h3>
+							<div>
+								<!-- switch -->
+								<label class="switch">
+									<input id ='sw_aq' type="checkbox" checked>
+									<span class="slider round"></span>
+								</label>
+							</div>
 						</div>
+
 	
 						<div class="col-1">
 							<button type="button" class="btn btn-light" onclick="back_aq()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
@@ -430,7 +450,7 @@
 								<select style="width:250px;margin-bottom:10px" id="apoio_aq"><option value="Elétrico por Resistor">Elétrico por Resistor</option><option value="GLP">GLP</option><option value="GNV">GNV</option></select>
 							<br>
 							<label>Consumo de aquecimento de água na condição de Referência (kWh/ano) - em energia final</label>
-								<input  min="0" class="form-control"style="width:250vhx;margin-bottom:10px"  id="aq_referencia" />
+								<input type="number" min="0" class="form-control"style="width:250vhx;margin-bottom:10px"  id="aq_referencia" />
 							<label>Consumo de aquecimento de água na condição de Real de fontes elétricas (kWh/ano) - em energia final</label>
 								<input type="number" min="0" class="form-control"style="width:250vhx;margin-bottom:10px"  id="aq_real_eletrica"/>
 							<label>Consumo de aquecimento de água na condição de Real de fontes térmicas (kWh/ano) - em energia final</label>
@@ -446,6 +466,13 @@
 					<div class="row m-3 p-3">
 						<div class="col-11">
 							<h3 style="font-weight: bolder">Geração de Energia</h3>
+							<div>
+								<!-- switch -->
+								<label class="switch">
+									<input id ='sw_geracao' type="checkbox" checked>
+									<span class="slider round"></span>
+								</label>
+							</div>
 						</div>
 						<div class="col-1">
 							<button type="button" class="btn btn-light" onclick="back_ge()"><img class="btn-prox-etapa" src="img/icone_14.svg" style="width: 15px;height:15px;" ></button>
@@ -482,6 +509,13 @@
 					<div class="row m-3 p-3">
 						<div class="col-11">
 							<h3 style="font-weight: bolder">Ar-condicionado</h3>
+							<div>
+								<!-- switch -->
+								<label class="switch">
+									<input id ='sw_ac' type="checkbox" checked>
+									<span class="slider round"></span>
+								</label>
+							</div>
 						</div>
 
 						<div class="col-1">
@@ -493,70 +527,21 @@
 
 					</div>
 					
-					<div class="card m-3" style="background-color: #F5F5F5;width:40%;">
-						<div class="card-body">
-
-						<h6 style="font-weight: bold;">Tipo de condicionamento da edificação:</h6>
-						
-						
-						<input type="checkbox" class="ventCheck" checked="true" id="check_condicionada" onclick="check_vent(this);"/> Condicionada artificialmente 
-						<input type="checkbox" class="ventCheck"  id="check_ventilada"  style="margin-left: 2.5vh;"onclick= "check_vent(this);"/> Naturalmente ventilada 
-						<input type="checkbox" class="ventCheck"  id="check_hibrida"  style="margin-left: 2.5vh;"onclick= "check_vent(this);"/> Híbrida
-
-						</div>
-					</div>
-
-
-
-					<!--script para alternar entre as divs do tipo de ventilação-->
-					<script src="js/alternar_ventilacao.js"></script>
-
 					<!--CONDICIONADO ARTIFICIALMENTE-->
 					<div class="card m-3" style="background-color: #F5F5F5;width:40%;" id='div_condicionado'>
 						<div class="card-body">
 						<label style="font-weight: bold;">Dados do sistema de condicionamento de ar</label><br>
 						<label style="font-weight: bold;">Capacidade total de resfriamento dos sistemas de condicionamento de ar (kW)</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="capacidade_ac_cond" />
+							<input type="number" class="form-control" style="width:250vhx;background-color:#F5F5F5;border:1px solid #D0D0D0;margin-bottom:10px" id="capacidade_ac_cond" disabled />
 						<label style="font-weight: bold;">Atende aos requisitos para a classificação A?</label><br>
 							<select id="cond_a_ac" class="form-control"><option value="Sim">Sim</option><option value="Não">Não</option></select>
 						<label style="font-weight: bold;">Consumo de energia final Real (kWh/ano):</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_real_cond" />
+							<input type="number" class="form-control" style="width:250vhx;background-color:#F5F5F5;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_real_cond" disabled />
 						<label style="font-weight: bold;">Consumo de energia final Referência (kWh/ano):</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_ref_cond" />
+							<input type="number" class="form-control" style="width:250vhx;background-color:#F5F5F5;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_ref_cond" disabled />
 		
 						</div>
 					</div>
-
-					<!--VENTILADO NATURALMENTE-->
-					<div class="card m-3" style="background-color: #F5F5F5; display: none;" id='div_ventilado'>
-						<div class="card-body">
-						<label style="font-weight: bold;" data-toggle="popover" data-content="Percentual de horas ocupadas em conforto térmico (%);" >PHOCT (%) &#x1F4A1</label>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" max='100' min="0"  id="PHOCT_ventilado" />
-						<a href="http://pbeedifica.com.br/naturalcomfort/#" target="_blank">Clique aqui para acessar a interface web para a determinação do PHOCT</a>	
-
-						</div>
-					</div>
-
-					<!--HIBRIDO-->
-					<div class="card m-3" style="background-color: #F5F5F5; display: none;" id='div_hibrido'>
-						<div class="card-body">
-						<label style="font-weight: bold;">Dados do sistema de condicionamento de ar</label><br>
-						<label style="font-weight: bold;">Capacidade de resfriamento do sistema de condicionamento de ar (kW)</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="capacidade_ac_hibrido" />
-						<label style="font-weight: bold;">Atende aos requisitos para a classificação A?</label><br>
-							<select id="cond_a_hibrido" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px"><option value="Sim" >Sim</option><option value="Não">Não</option></select>
-						<label style="font-weight: bold;">Consumo de energia final Real (kWh/ano) - sem desconto do PHOCT:</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_real_hibrido" />
-						<label style="font-weight: bold;">Consumo de energia final Referência (kWh/ano) - sem desconto do PHOCT:</label><br>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" id="consumo_ac_ref_hibrido" />
-						<label style="font-weight: bold;" data-toggle="popover" data-content="Percentual de horas ocupadas em conforto térmico (%);" >PHOCT (%) &#x1F4A1</label>
-							<input type="number" class="form-control" style="width:250vhx;background-color:#FFFFFF;border:1px solid #D0D0D0;margin-bottom:10px" max='100' min="0"  id="PHOCT_hibrido" />
-						<a href="http://pbeedifica.com.br/naturalcomfort/#" target="_blank">Clique aqui para acessar a interface web para a determinação do PHOCT</a>
-
-						</div>
-					</div>
-
-
 
 				</div>
 
@@ -610,6 +595,7 @@
 						  <div class="card border-light mb-3" style="max-width: 18rem;height: fit-content;">
 							<div class="card-header" style="font-size: 1.2em; text-align: center;font-weight: bold;">
 								Iluminação
+								
 								<h3 id='consumo_iluminacao'style="font-size: 0.8em; text-align: center;">- kWh/ano</h3>
 								</div>
 							<div class="card-body text-secondary">
@@ -636,6 +622,8 @@
 
 
 					</div>
+					<!--script para os toggle buttons - switches-->
+					<script src="js/info_switches.js"></script>
 
 					<div class="card-deck" style="position: relative; left:2%;">
 
@@ -682,75 +670,7 @@
 
 					</div>
 
-						  <!--
-
-						<div style="width:15vw;height:20vw;margin-left: 2vw;margin-top: 2vh;">
-							<h2 style="font-size: 1.2em; text-align: center;font-weight: bold;"> Envoltória*</h2>
-								<h3 id='carga_envoltoria' style="font-size: 1.2em; text-align: center;">- kWh/ano </h3>
-							<h5 id='reducao_envoltoria' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
-							<img id='img_envoltoria' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
-							<h3 style="font-size: 1.0em; text-align: center;">* Valor em carga térmica. </h3>
-	
-						</div>
-						<div class='col-3' style="width:15vw;height:20vw;margin-left: 2vw;margin-top: 2vh;">
-							<h2 style="font-size: 1.2em; text-align: center;font-weight: bold;"> Ar-condicionado</h2>
-							<h3 id='consumo_ac' style="font-size: 1.2em; text-align: center;">- kWh/ano</h3>
-							<h5 id='reducao_ac' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
-							<img id='img_ac' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
-						</div>
-						<div class='col-3' style="width:15vw;height:20vw;margin-left: 2vw;margin-top: 2vh;">
-							<h2 style="font-size: 1.2em; text-align: center;font-weight: bold;"> Iluminação</h2>
-							<h3 id='consumo_iluminacao'style="font-size: 1.2em; text-align: center;">- kWh/ano</h3>
-							<h5 id='reducao_iluminacao' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
-							<img id='img_iluminacao' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
-						</div>
-						<div  style="width:15vw;height:20vw;margin-left: 2vw;margin-top: 2vh;">
-							<h2 style="font-size: 1.2em; text-align: center;font-weight: bold;"> Aquecimento de água</h2>
-							<h3 id='consumo_aq' style="font-size: 1.2em; text-align: center;">- kWh/ano</h3>
-							<h5 id='reducao_aq' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
-							<img id='img_aq'style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
-						</div>
-					</div>
-					
-					<div class="row" style="position: relative;top:-2vw;">
-						<div style="width:15vw;height:20vw;margin-left: 2vw;" >
-							<h2 style="font-size: 1.2em; text-align: center;margin-top: 0;font-weight: bold;">Geral</h2>
-							<h3 id='consumo_geral' style="font-size: 1.2em; text-align: center;">- kWh/ano</h3>
-							<h5 id='reducao_geral' style="font-size: 0.8em; text-align: center;">Redução em relação à condição de referência: - %</h5>
-							<img id='img_geral' style="max-width:100%;max-height:100%;" src="img/ClassZero.svg" alt="">
-						</div>
-						
-						<div class="row" style="width:80%;">
-							<div style="width:75%; height:75%; margin-top: 2vhx;position: relative;left: 5%; background-color: #F5F5F5; border-radius: 10px;padding: 2vh;">
-								<h6 id="nome_ed" style="font-weight: bold;font-size: 1.8em" style="margin-bottom: 2%;"></h6>
-								<div class="column">
-									<p>Área total: <b id="area_resumo">XX</b> m²</p>
-									<p>Consumo Total na Condição de Referência: <b id="consumo_total_ref">-</b> kWh/m².ano</p>
-									<p>Consumo Total na Condição Real: <b id="consumo_total_real">-</b> kWh/m².ano</p>
-									<p>Percentual de Redução Geral: <b id="reducao_total">-</b> %</p>
-									<p>Classificação sem a Geração de Energia: <b id="classe_sem_geracao">-</b></p>
-									<div class="row" style="margin-left:1%;">
-										<button style="margin-right:1.5%;" class="btn btn-primary" onclick="classificar()">CLASSIFICAR</button>	
-										<button style="margin-right:1.5%;" class="btn btn-info" onclick="classificar()">Baixar planilha</button>	
-										<button style="margin-right:1.5%;" class="btn btn-info" onclick="classificar()">Baixar PDF</button>	
-
-
-									</div>	
-									
-
-								</div>
-								<div class="column" >
-									<p>Emissão de CO2 na condição de Referência: <b id="emissoes_ref">-</b>tCO2/ano</p>
-									<p>Emissão de CO2 na condição de Real: <b id="emissoes_real">-</b>tCO2/ano</p>
-									<p>Percentual de redução das Emissões de CO2: <b id="reducao_emissoes">-</b> %</p>
-								</div>
-
-							</div>
-	
-						</div>
-
-					</div>
-				-->
+						  
 
 				</div>		
 					
@@ -768,61 +688,282 @@
 
 
 <!--MODAIS USADOS NESTA PÁGINA-->
+
 <!-- Modal adição de vidro -->
 <div class="modal fade" id="VidroModal" tabindex="-1" role="dialog"  aria-hidden="true">
 
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Adicionar novo vidro</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id='modal_vidros' class="modal-body">
-			<label>Nome do vidro</label>
-            <input id="nome_vidro" type="text" class="form-control">
-            <label>Transmitância térmica do vidro (W/m²K)</label>
-            <input id="u_vidro" type="number" max='5.7' min="0" class="form-control">
-			<label>Fator solar do vidro (adimensional)</label>
-            <input id="valor_fs" type="number" max='0.87' min="0" class="form-control">
-        </div>
-        <div class="modal-footer">
-          <button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-          <button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_vidro()" data-dismiss="modal" >Adicionar</button>
-        </div>
-      </div>
+			<div class="modal-header">
+			<h5 class="modal-title">Adicionar ou editar vidros</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+
+			<div id='modal_vidros' class="modal-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" id="add_vidro_tab" href="#adicionar_vidro" role="tab">Adicionar vidro</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#list_vidro" role="tab">Lista de vidros</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" style='display:none' id="edit_vidro_tab" data-toggle="tab" href="#edit_vidro" role="tab">Editar vidro</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="adicionar_vidro" role="tabpanel">
+					<div id='modal_vidros' class="modal-body">
+						<label>Nome do vidro</label>
+						<input id="nome_vidro" type="text" class="form-control">
+						<label>Transmitância térmica do vidro (W/m²K)</label>
+						<input id="u_vidro" type="number" max='5.7' min="0" class="form-control">
+						<label>Fator solar do vidro (adimensional)</label>
+						<input id="valor_fs" type="number" max='0.87' min="0" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_vidro()" data-dismiss="modal" >Adicionar</button>
+					</div>
+				</div>
+				<div class="tab-pane" id="list_vidro" role="tabpanel">
+					<table id="lista_vidros">
+						
+					</table>
+				</div>
+				<div class="tab-pane " id="edit_vidro" role="tabpanel">
+					<div id='modal_vidros' class="modal-body">
+						<label>Editando a vidro: <span style="font-weight:bold" id="name_vidro_to_edit"></span></label><br>
+						<label>Nome da vidro</label>
+						<input id="nome_vidro_edit" type="text" class="form-control">
+						<label>Transmitância térmica da vidro (W/m²K)</label>
+						<input id="u_vidro_edit" type="number" max='5.7' min="0" class="form-control">
+						<label>Fator solar do vidro (adimensional)</label>
+						<input id="valor_fs_edit" type="number" max='0.87' min="0" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_vidros(),carregar_usos()" data-dismiss="modal" >Confirmar edição</button>
+					</div>
+				</div>
+			</div>
+	  </div>
     </div>
 </div> <!--Fim do modal de vidros -->
 
-<!-- Modal adição de parede -->
-<div class="modal fade" id="ParedeModal" role="dialog"  aria-hidden="true">
+<!-- Modal adição de vidro abertura zenital-->
+<div class="modal fade" id="VidroAZModal" tabindex="-1" role="dialog"  aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title">Adicionar ou editar vidros da abertura zenital</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+
+			<div id='modal_vidros_az' class="modal-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" id="add_vidro_az_tab" href="#adicionar_vidro_az" role="tab">Adicionar vidro</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#list_vidro_az" role="tab">Lista de vidros</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" style='display:none' id="edit_vidro_az_tab" data-toggle="tab" href="#edit_vidro_az" role="tab">Editar vidro</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="adicionar_vidro_az" role="tabpanel">
+					<div id='modal_vidros_az' class="modal-body">
+						<label>Nome do vidro</label>
+						<input id="nome_vidro_az" type="text" class="form-control">
+						<label>Transmitância térmica do vidro (W/m²K)</label>
+						<input id="u_vidro_az" type="number" max='5.7' min="0" class="form-control">
+						<label>Fator solar do vidro (adimensional)</label>
+						<input id="valor_fs_az" type="number" max='0.87' min="0" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_vidro()" data-dismiss="modal" >Adicionar</button>
+					</div>
+				</div>
+				<div class="tab-pane" id="list_vidro_az" role="tabpanel">
+					<table id="lista_vidro_az">
+						
+					</table>
+				</div>
+				<div class="tab-pane " id="edit_vidro_az" role="tabpanel">
+					<div id='modal_vidros_az' class="modal-body">
+						<label>Editando a vidro: <span style="font-weight:bold" id="name_vidro_az_to_edit"></span></label><br>
+						<label>Nome da vidro</label>
+						<input id="nome_vidro_az_edit" type="text" class="form-control">
+						<label>Transmitância térmica da vidro (W/m²K)</label>
+						<input id="u_vidro_az_edit" type="number" max='5.7' min="0" class="form-control">
+						<label>Fator solar do vidro (adimensional)</label>
+						<input id="valor_fs_az_edit" type="number" max='0.87' min="0" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_vidros_az(),carregar_usos()" data-dismiss="modal" >Confirmar edição</button>
+					</div>
+				</div>
+			</div>
+	  </div>
+    </div>
+</div> <!--Fim do modal de vidros az-->
+
+<!-- Modal adição de parede externa -->
+<div class="modal fade" id="ParedeExtModal" role="dialog"  aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Adicionar nova parede</h5>
+          <h5 class="modal-title">Adicionar ou editar paredes Externas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div id='modal_paredes' class="modal-body">
-			<label>Nome da parede</label>
-            <input id="nome_parede" type="text" class="form-control">
-            <label>Transmitância térmica da parede (W/m²K)</label>
-            <input id="u_parede" type="number" max='5.7' min="0" class="form-control">
-			<label>Capacidade térmica da parede (kJ/m²K)</label>
-            <input id="ct_parede" type="number" max='220' min="0"  class="form-control">
-			<label>Absortância à radiação solar da parede (adimensional)</label>
-            <input id="ars_parede" type="number" max='0.8' min="0"  class="form-control">
-        </div>
-        <div class="modal-footer">
-          <button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-          <button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_parede()" data-dismiss="modal" >Adicionar</button>
 
+
+        <div id='modal_paredes' class="modal-body">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" id="add_par_ext_tab" href="#adicionar_parede_ext" role="tab">Adicionar parede</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#list_parede_ext" role="tab">Lista de paredes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style='display:none' id="edit_par_ext_tab" data-toggle="tab" href="#edit_parede_ext" role="tab">Editar parede</a>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="adicionar_parede_ext" role="tabpanel">
+					<div id='modal_paredes' class="modal-body">
+						<label>Nome da parede</label>
+						<input id="nome_parede_ext" type="text" class="form-control">
+						<label>Transmitância térmica da parede (W/m²K)</label>
+						<input id="u_parede_ext" type="number" max='5.7' min="0" class="form-control">
+						<label>Capacidade térmica da parede (kJ/m²K)</label>
+						<input id="ct_parede_ext" type="number" max='220' min="0"  class="form-control">
+						<label>Absortância à radiação solar da parede (adimensional)</label>
+						<input id="ars_parede_ext" type="number" max='0.8' min="0"  class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_parede_ext()" data-dismiss="modal" >Adicionar</button>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="list_parede_ext" role="tabpanel">
+					<table id="lista_paredes_externas">
+						
+					</table>
+				</div>
+				<div class="tab-pane " id="edit_parede_ext" role="tabpanel">
+					<div id='modal_paredes' class="modal-body">
+						<label>Editando a parede: <span style="font-weight:bold" id="name_par_ext_to_edit"></span></label><br>
+						<label>Nome da parede</label>
+						<input id="nome_parede_ext_edit" type="text" class="form-control">
+						<label>Transmitância térmica da parede (W/m²K)</label>
+						<input id="u_parede_ext_edit" type="number" max='5.7' min="0" class="form-control">
+						<label>Capacidade térmica da parede (kJ/m²K)</label>
+						<input id="ct_parede_ext_edit" type="number" max='220' min="0"  class="form-control">
+						<label>Absortância à radiação solar da parede (adimensional)</label>
+						<input id="ars_parede_ext_edit" type="number" max='0.8' min="0"  class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_paredes_ext()" data-dismiss="modal" >Confirmar edição</button>
+					</div>
+				</div>
+
+			</div>
         </div>
+
       </div>
     </div>
   </div> <!--Fim do modal de paredes -->
+
+  <!-- Modal adição de parede interna -->
+<div class="modal fade" id="ParedeIntModal" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Adicionar ou editar paredes Internas</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+        <div id='modal_paredes' class="modal-body">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" id="add_par_int_tab" href="#adicionar_parede_int" role="tab">Adicionar parede</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#list_parede_int" role="tab">Lista de paredes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style='display:none' id="edit_par_int_tab" data-toggle="tab" href="#edit_parede_int" role="tab">Editar parede</a>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="adicionar_parede_int" role="tabpanel">
+					<div id='modal_paredes' class="modal-body">
+						<label>Nome da parede</label>
+						<input id="nome_parede_int" type="text" class="form-control">
+						<label>Transmitância térmica da parede (W/m²K)</label>
+						<input id="u_parede_int" type="number" max='5.7' min="0" class="form-control">
+						<label>Capacidade térmica da parede (kJ/m²K)</label>
+						<input id="ct_parede_int" type="number" max='220' min="0"  class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_parede_int()" data-dismiss="modal" >Adicionar</button>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="list_parede_int" role="tabpanel">
+					<table id="lista_paredes_internas">
+						
+					</table>
+				</div>
+				<div class="tab-pane " id="edit_parede_int" role="tabpanel">
+					<div id='modal_paredes' class="modal-body">
+						<label>Editando a parede: <span style="font-weight:bold" id="name_par_int_to_edit"></span></label><br>
+						<label>Nome da parede</label>
+						<input id="nome_parede_int_edit" type="text" class="form-control">
+						<label>Transmitância térmica da parede (W/m²K)</label>
+						<input id="u_parede_int_edit" type="number" max='5.7' min="0" class="form-control">
+						<label>Capacidade térmica da parede (kJ/m²K)</label>
+						<input id="ct_parede_int_edit" type="number" max='220' min="0"  class="form-control">
+						<label>Absortância à radiação solar da parede (adimensional)</label>
+						<input id="ars_parede_int_edit" type="number" max='0.8' min="0"  class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_paredes_int()" data-dismiss="modal" >Confirmar edição</button>
+					</div>
+				</div>
+
+			</div>
+        </div>
+
+      </div>
+    </div>
+  </div> <!--Fim do modal de paredes internas-->
 
 <!-- Modal adição de cobertura -->
 <div class="modal fade" id="CoberturaModal" role="dialog"  aria-hidden="true">
@@ -830,31 +971,137 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Adicionar nova cobertura</h5>
+          <h5 class="modal-title">Adicionar ou editar coberturas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div id='modal_cobertura' class="modal-body">
-			<label>Nome da cobertura</label>
-            <input id="nome_cob" type="text" class="form-control">
-            <label>Transmitância térmica da cobertura (W/m²K)</label>
-            <input id="u_cob" type="number" max='5.07' min="0"  class="form-control">
-			<label>Capacidade térmica da cobertura (kJ/m²K)</label>
-            <input id="ct_cob" type="number" max='220' min="0"  class="form-control">
-			<label>Absortância à radiação solar da cobertura (adimensional)</label>
-            <input id="ars_cob" type="number" max='0.8' min="0" class="form-control">
-			
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" id="add_cob_tab" href="#adicionar_cobertura" role="tab">Adicionar cobertura</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#list_cobertura" role="tab">Lista de coberturas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style='display:none' id="edit_cob_tab" data-toggle="tab" href="#edit_cobertura" role="tab">Editar cobertura</a>
+				</li>
+			</ul>
         </div>
-        <div class="modal-footer">
-          <button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-          <button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_cob()" data-dismiss="modal" >Adicionar</button>
 
-        </div>
+		<div class="tab-content">
+			<div class="tab-pane active" id="adicionar_cobertura" role="tabpanel">
+				<div id='modal_cobertura' class="modal-body">
+					<label>Nome da cobertura</label>
+					<input id="nome_cob" type="text" class="form-control">
+					<label>Transmitância térmica da cobertura (W/m²K)</label>
+					<input id="u_cob" type="number" max='5.07' min="0"  class="form-control">
+					<label>Capacidade térmica da cobertura (kJ/m²K)</label>
+					<input id="ct_cob" type="number" max='220' min="0"  class="form-control">
+					<label>Absortância à radiação solar da cobertura (adimensional)</label>
+					<input id="ars_cob" type="number" max='0.8' min="0" class="form-control">
+				</div>
+				<div class="modal-footer">
+					<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+					<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_cob()" data-dismiss="modal" >Adicionar</button>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="list_cobertura" role="tabpanel">
+				<table id="lista_coberturas">
+					
+				</table>
+			</div>
+			<div class="tab-pane " id="edit_cobertura" role="tabpanel">
+				<div id='modal_cobertura' class="modal-body">
+					<label>Editando a cobertura: <span style="font-weight:bold" id="name_cob_to_edit"></span></label><br>
+					<label>Nome da cobertura</label>
+					<input id="nome_cob_edit" type="text" class="form-control">
+					<label>Transmitância térmica da cobertura (W/m²K)</label>
+					<input id="u_cob_edit" type="number" max='5.07' min="0"  class="form-control">
+					<label>Capacidade térmica da cobertura (kJ/m²K)</label>
+					<input id="ct_cob_edit" type="number" max='220' min="0"  class="form-control">
+					<label>Absortância à radiação solar da cobertura (adimensional)</label>
+					<input id="ars_cob_edit" type="number" max='0.8' min="0" class="form-control">
+				</div>
+				<div class="modal-footer">
+					<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+					<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_coberturas()" data-dismiss="modal" >Confirmar edição</button>
+				</div>
+			</div>
+		</div>
       </div>
     </div>
   </div> <!--Fim do modal de coberturas -->
 
+<!-- Modal adição de piso -->
+<div class="modal fade" id="pisoModal" role="dialog"  aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Adicionar ou editar pisos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id='modal_piso' class="modal-body">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" id="add_piso_tab" href="#adicionar_piso" role="tab">Adicionar piso</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#list_piso" role="tab">Lista de pisos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style='display:none' id="edit_piso_tab" data-toggle="tab" href="#edit_piso" role="tab">Editar piso</a>
+				</li>
+			</ul>
+        </div>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="adicionar_piso" role="tabpanel">
+				<div id='modal_piso' class="modal-body">
+					<label>Nome do piso</label>
+					<input id="nome_piso" type="text" class="form-control">
+					<label>Transmitância térmica do piso (W/m²K)</label>
+					<input id="u_piso" type="number" max='5.07' min="0"  class="form-control">
+					<label>Capacidade térmica do piso (kJ/m²K)</label>
+					<input id="ct_piso" type="number" max='220' min="0"  class="form-control">
+				</div>
+				<div class="modal-footer">
+					<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+					<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_piso()" data-dismiss="modal" >Adicionar</button>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="list_piso" role="tabpanel">
+				<table id="lista_pisos">
+					
+				</table>
+			</div>
+			<div class="tab-pane " id="edit_piso" role="tabpanel">
+				<div id='modal_piso' class="modal-body">
+					<label>Editando a piso: <span style="font-weight:bold" id="name_piso_to_edit"></span></label><br>
+					<label>Nome da piso</label>
+					<input id="nome_piso_edit" type="text" class="form-control">
+					<label>Transmitância térmica da piso (W/m²K)</label>
+					<input id="u_piso_edit" type="number" max='5.07' min="0"  class="form-control">
+					<label>Capacidade térmica da piso (kJ/m²K)</label>
+					<input id="ct_piso_edit" type="number" max='220' min="0"  class="form-control">
+				</div>
+				<div class="modal-footer">
+					<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+					<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_pisos()" data-dismiss="modal" >Confirmar edição</button>
+				</div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div> <!--Fim do modal de pisos -->
+
+  
  <!-- Modal adição de ar condicionado -->
 <div class="modal fade" id="ACModal" tabindex="-1" role="dialog"  aria-hidden="true">
 
@@ -867,33 +1114,84 @@
           </button>
         </div>
         <div class="modal-body">
-			<label>Nome do sistema de condicionamento</label>
-            <input id="nome_sistema_ac" type="text" class="form-control">
-			<label>Tipo de Sistema</label>
-            <select class="form-control" id="tipo_sistema">
-				<option value="baixa_capacidade">Baixa capacidade (até 17.6kW)</option>
-				<option value="alta_capacidade">Alta capacidade (acima de 17.6kW)</option>
-			</select>
-            <label>Capacidade unitária de Resfriamento (kW)</label>
-            <input class="form-control" min="0" id="capacidade_ac" type="number">
-			<label>Tipo coeficiente de eficiência energética</label>
-            <select class="form-control" id="tipo_cee">
-				<option value="COP">COP</option>
-				<option value="IDRS">IDRS</option>
-				<option value="CSPF">CSPF</option>
-				<option value="SPLV">SPLV</option>
-				<option value="k">k</option>
-			</select>
-			<label id='nome_cee'>Valor do coeficiente</label>
-            <input class="form-control" id="valor_cee" max='15' min="0"  type="number">
-			<label>Potência dos equipamentos de renovação de ar (W)</label>
-            <input class="form-control" id="renovacao_ac" min="0"  type="number">
-
-        </div>
-        <div class="modal-footer">
-          <button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-          <button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_ac()" data-dismiss="modal" >Adicionar</button>
-        </div>
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" id="add_ac_tab" href="#adicionar_ac" role="tab">Adicionar sistema</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#list_ac" role="tab">Lista de sistemas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style='display:none' id="edit_ac_tab" data-toggle="tab" href="#edit_ac" role="tab">Editar sistema</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="adicionar_ac" role="tabpanel">
+					<div id='modal_ac' class="modal-body">
+						<label>Nome do sistema de condicionamento</label>
+						<input id="nome_sistema_ac" type="text" class="form-control">
+						<label>Tipo de Sistema</label>
+						<select class="form-control" id="tipo_sistema">
+							<option value="baixa_capacidade">Baixa capacidade (até 17.6kW)</option>
+							<option value="alta_capacidade">Alta capacidade (acima de 17.6kW)</option>
+						</select>
+						<label>Capacidade unitária de Resfriamento (kW)</label>
+						<input class="form-control" min="0" id="capacidade_ac" type="number">
+						<label>Tipo coeficiente de eficiência energética</label>
+						<select class="form-control" id="tipo_cee">
+							<option value="COP">COP</option>
+							<option value="IDRS">IDRS</option>
+							<option value="CSPF">CSPF</option>
+							<option value="SPLV">SPLV</option>
+							<option value="k">k</option>
+						</select>
+						<label id='nome_cee'>Valor do coeficiente</label>
+						<input class="form-control" id="valor_cee" max='15' min="0"  type="number">
+						<label>Potência dos equipamentos de renovação de ar (W)</label>
+						<input class="form-control" id="renovacao_ac" min="0"  type="number">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-secondary" onclick="add_ac()" data-dismiss="modal" >Adicionar</button>
+					</div>
+				</div>
+				<div class="tab-pane" id="list_ac" role="tabpanel">
+					<table id="lista_ac">
+						
+					</table>
+				</div>
+				<div class="tab-pane" id="edit_ac" role="tabpanel">
+					<div id='modal_ac' class="modal-body">
+						<label>Editando o sistema: <span style="font-weight:bold" id="name_ac_to_edit"></span></label><br>
+						<label>Nome do sistema de condicionamento</label>
+						<input id="nome_sistema_ac_edit" type="text" class="form-control">
+						<label>Tipo de Sistema</label>
+						<select class="form-control" id="tipo_sistema_edit">
+							<option value="baixa_capacidade">Baixa capacidade (até 17.6kW)</option>
+							<option value="alta_capacidade">Alta capacidade (acima de 17.6kW)</option>
+						</select>
+						<label>Capacidade unitária de Resfriamento (kW)</label>
+						<input class="form-control" min="0" id="capacidade_ac_edit" type="number">
+						<label>Tipo coeficiente de eficiência energética</label>
+						<select class="form-control" id="tipo_cee_edit">
+							<option value="COP">COP</option>
+							<option value="IDRS">IDRS</option>
+							<option value="CSPF">CSPF</option>
+							<option value="SPLV">SPLV</option>
+							<option value="k">k</option>
+						</select>
+						<label>Valor do coeficiente</label>
+						<input class="form-control" id="valor_cee_edit" max='15' min="0"  type="number">
+						<label>Potência dos equipamentos de renovação de ar (W)</label>
+						<input class="form-control" id="renovacao_ac_edit" min="0" min="100000"  type="number">
+					</div>
+					<div class="modal-footer">
+						<button   type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+						<button id="btn-add-tab" type="submit" class="btn btn-danger" onclick="atualizar_ac()" data-dismiss="modal" >Confirmar edição</button>
+					</div>
+				</div>
+			</div>
+		</div>
       </div>
     </div>
 </div> <!--Fim do modal de AC -->
