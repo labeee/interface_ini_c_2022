@@ -193,8 +193,8 @@ async function calcular(){
                     var upar_ext = -6
                     var ct_par_ext = -400
                     var apar_ext_ref = 0
-                    var upar_ext_ref = 0
-                    var ct_par_ext_ref = 0
+                    var upar_ext_ref = -6
+                    var ct_par_ext_ref = -400
                 }
                 
                 else {//caso não seja zona interna (quando é perimetral)
@@ -381,7 +381,10 @@ async function calcular(){
 
                 
                 array_zona_ref = [parseFloat(PD), parseFloat(xlen), WWR_ref/100, AVS_ref, upiso_ref, ct_piso_ref, ucob_ref, ct_cob_ref, acob_ref, upar_ext_ref, ct_par_ext_ref, apar_ext_ref, upar_int_ref, ct_par_int_ref, FS_ref, uvid_ref, FS_az_ref, uvid_az_ref, pessoas, DPI_ref, DPE, PAZ_ref, lat, alt, dbt_mean, dbt_25p, dbt_75p, ws_mean, ws_25p, ws_75p, ghr_mean, ghr_25p, ghr_75p, dpt_mean, dpt_25p, dpt_75p, AOV_ref, AHS_ref, schedule_SCH_10H,schedule_SCH_12H,schedule_SCH_16H,schedule_SCH_24H,schedule_SCH_8H, is_1pvto_0,is_1pvto_1, floor_exp_0, floor_exp_1, roof_exp_0, roof_exp_1,apt_near_0, apt_near_1,is_perimentral_0, is_perimetral_1, app_ori_360, app_ori_0, app_ori_45, app_ori_90, app_ori_135 , app_ori_180 , app_ori_225, app_ori_270,  app_ori_315 ]
-
+                
+                console.log('normal', array_zona, 'ref', array_zona_ref)
+                
+               
                 //uma vez obtido o array, ele deve ser normalizado e depois inserido no metamodelo 
                 // para normalizar toma-se os valores máximos e mínimos do modelo
                 min = {
@@ -532,7 +535,7 @@ async function calcular(){
 
                 try {
                 //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-                const secao =  await ort.InferenceSession.create('v4_ann_cool_0.99693_25.34_5.58.onnx');
+                const secao =  await ort.InferenceSession.create('/v4_ann_cool_0.99693_25.34_5.58.onnx');
                 
                 secao['handler']['inputNames'][0] = 'entradas'
                 secao['handler']['outputNames'][0] = 'saidas'
