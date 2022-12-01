@@ -292,8 +292,8 @@ async function calcular(){
                 dados_piso = pisos.filter(piso => piso.nome ==  array[entradas.indexOf('lista_pisos')])[0]
                 var upiso = dados_piso.u_piso
                 var ct_piso = dados_piso.ct_piso
-                var upiso_ref = 2.39
-                var ct_piso_ref = 150
+                var upiso_ref = 3.33
+                var ct_piso_ref = 220
                 
 
                 /*else{
@@ -532,7 +532,7 @@ async function calcular(){
 
                 try {
                 //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-                const secao =  await ort.InferenceSession.create('v4_ann_cool_0.99693_25.34_5.58.onnx');
+                const secao =  await ort.InferenceSession.create('/v4_ann_cool_0.99693_25.34_5.58.onnx');
                 
                 secao['handler']['inputNames'][0] = 'entradas'
                 secao['handler']['outputNames'][0] = 'saidas'
