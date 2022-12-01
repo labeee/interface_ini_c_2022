@@ -1033,7 +1033,7 @@ function classificar(){
     if (classificacao_ed == 'erro'){
       window.alert('Existe algum erro na compilação do consumo total da edificação, verifique o preenchimento de todos os sistemas')
       document.getElementById('consumo_geral').innerHTML = '- kWh/ano' 
-      document.getElementById('img_geral').src = 'img/classZero.svg'
+      document.getElementById('img_geral').src = 'img/ClassZero.svg'
       document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: - %'
       document.getElementById('classe_sem_geracao').innerHTML = '-'
       document.getElementById('reducao_total').innerHTML = '-'
