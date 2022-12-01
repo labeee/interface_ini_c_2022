@@ -813,7 +813,7 @@ function classificar(){
 
     //atribuição de valores para envoltória
     document.getElementById('carga_envoltoria').innerHTML = cargas_real + ' kWh/ano' 
-    document.getElementById('img_envoltoria').src = 'img/class'+classificacao_envoltoria+'.svg'
+    document.getElementById('img_envoltoria').src = 'img/Class'+classificacao_envoltoria+'.svg'
     if (REDCEP !='-'){
       document.getElementById('reducao_envoltoria').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP)+' %'
     }
@@ -834,7 +834,7 @@ function classificar(){
       consumo_ac_real_conta = 0 
       consumo_ac_ref_conta = 0
     }
-    document.getElementById('img_ac').src = 'img/class'+classificacao_sistema_ac+'.svg'
+    document.getElementById('img_ac').src = 'img/Class'+classificacao_sistema_ac+'.svg'
     if(dif_sistema_ac !='-'){
       document.getElementById('reducao_ac').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_ac)+' %'
     }
@@ -885,7 +885,7 @@ function classificar(){
     }
 
     document.getElementById('consumo_iluminacao').innerHTML = ilum_primaria + ' kWh/ano' 
-    document.getElementById('img_iluminacao').src = 'img/class'+classificacao_ilum+'.svg'
+    document.getElementById('img_iluminacao').src = 'img/Class'+classificacao_ilum+'.svg'
     if (dif_iluminacao !='-'){
       document.getElementById('reducao_iluminacao').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_iluminacao)+' %'
     }
@@ -951,7 +951,7 @@ function classificar(){
   }
   
   document.getElementById('consumo_aq').innerHTML = aq_real + ' kWh/ano' 
-  document.getElementById('img_aq').src = 'img/class'+classificacao_sistema_aq+'.svg'
+  document.getElementById('img_aq').src = 'img/Class'+classificacao_sistema_aq+'.svg'
   if (dif_sistema_aq !='-'){
     document.getElementById('reducao_aq').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(dif_sistema_aq)+' %'
   }
@@ -1045,7 +1045,7 @@ function classificar(){
     
     else{
       document.getElementById('consumo_geral').innerHTML = Math.round(CEPreal) + ' kWh/ano' 
-      document.getElementById('img_geral').src = 'img/class'+classificacao_ed+'.svg'
+      document.getElementById('img_geral').src = 'img/Class'+classificacao_ed+'.svg'
       document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP_geral)+' %'
       document.getElementById('reducao_total').innerHTML = Math.round(REDCEP_geral)
       document.getElementById('classe_sem_geracao').innerHTML = classificacao_ed_sem
