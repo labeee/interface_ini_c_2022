@@ -183,9 +183,12 @@ async function calcular(){
                     var FS = 0
                     var uvid = 0
                     var WWR = 0
-                    var AHS =  0
-                    var AOV = 0
-                    var AVS = 0
+                    var AHS = 90
+                    var AOV = 90
+                    var AVS = 90
+                    var AHS_ref = 90
+                    var AVS_ref = 90
+                    var AOV_ref = 90
                     var FS_ref = 0
                     var uvid_ref = 0
                     var WWR_ref = 0
@@ -535,7 +538,7 @@ async function calcular(){
 
                 try {
                 //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-                const secao =  await ort.InferenceSession.create('v4_ann_cool_0.99693_25.34_5.58.onnx');
+                const secao =  await ort.InferenceSession.create('/v4_ann_cool_0.99693_25.34_5.58.onnx');
                 
                 secao['handler']['inputNames'][0] = 'entradas'
                 secao['handler']['outputNames'][0] = 'saidas'
