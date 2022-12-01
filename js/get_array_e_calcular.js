@@ -261,6 +261,10 @@ async function calcular(){
                     var AHS = parseFloat(array[entradas.indexOf('ahs_zona')])
                     var AVS = parseFloat(array[entradas.indexOf('avs_zona')])
                     var AOV = parseFloat(array[entradas.indexOf('aov_zona')])
+                    
+                    var AHS_ref = 0
+                    var AVS_ref = 0
+                    var AOV_ref = 0
 
                     //parede ref
                     var apar_ext_ref = 0.5
@@ -376,7 +380,7 @@ async function calcular(){
                 //array_zona_ref = [parseInt(AZI), DPE, DPI_ref , FS_ref, INF, pessoas, uvid_ref, acob_ref, apar_ref, PD, WWR_ref, 0, 0, AOV, hOcc, FGroud, FOutdoors, RoofOutdoors, ucob_ref, upar_ref, ct_cob_ref, ct_par_ref, 0, Zint, parseFloat(LAT), parseFloat(Altitude), parseFloat(VVENTO), parseFloat(RAD), parseFloat(TMA), parseFloat(DPT), parseFloat(AMA), parseFloat(DPA)]
 
                 
-                array_zona_ref = [parseFloat(PD), parseFloat(xlen), WWR_ref/100, AVS, upiso_ref, ct_piso_ref, ucob_ref, ct_cob_ref, acob_ref, upar_ext_ref, ct_par_ext_ref, apar_ext_ref, upar_int_ref, ct_par_int_ref, FS_ref, uvid_ref, FS_az_ref, uvid_az_ref, pessoas, DPI_ref, DPE, PAZ_ref, lat, alt, dbt_mean, dbt_25p, dbt_75p, ws_mean, ws_25p, ws_75p, ghr_mean, ghr_25p, ghr_75p, dpt_mean, dpt_25p, dpt_75p, AOV, AHS, schedule_SCH_10H,schedule_SCH_12H,schedule_SCH_16H,schedule_SCH_24H,schedule_SCH_8H, is_1pvto_0,is_1pvto_1, floor_exp_0, floor_exp_1, roof_exp_0, roof_exp_1,apt_near_0, apt_near_1,is_perimentral_0, is_perimetral_1, app_ori_360, app_ori_0, app_ori_45, app_ori_90, app_ori_135 , app_ori_180 , app_ori_225, app_ori_270,  app_ori_315 ]
+                array_zona_ref = [parseFloat(PD), parseFloat(xlen), WWR_ref/100, AVS_ref, upiso_ref, ct_piso_ref, ucob_ref, ct_cob_ref, acob_ref, upar_ext_ref, ct_par_ext_ref, apar_ext_ref, upar_int_ref, ct_par_int_ref, FS_ref, uvid_ref, FS_az_ref, uvid_az_ref, pessoas, DPI_ref, DPE, PAZ_ref, lat, alt, dbt_mean, dbt_25p, dbt_75p, ws_mean, ws_25p, ws_75p, ghr_mean, ghr_25p, ghr_75p, dpt_mean, dpt_25p, dpt_75p, AOV_ref, AHS_ref, schedule_SCH_10H,schedule_SCH_12H,schedule_SCH_16H,schedule_SCH_24H,schedule_SCH_8H, is_1pvto_0,is_1pvto_1, floor_exp_0, floor_exp_1, roof_exp_0, roof_exp_1,apt_near_0, apt_near_1,is_perimentral_0, is_perimetral_1, app_ori_360, app_ori_0, app_ori_45, app_ori_90, app_ori_135 , app_ori_180 , app_ori_225, app_ori_270,  app_ori_315 ]
 
                 //uma vez obtido o array, ele deve ser normalizado e depois inserido no metamodelo 
                 // para normalizar toma-se os valores máximos e mínimos do modelo

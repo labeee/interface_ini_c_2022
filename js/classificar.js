@@ -771,9 +771,11 @@ function classificar(){
     }
 
     else{
+      mensagem_ac = ''
       classificacao_sistema_ac = 'Zero' //manter como padrão
       dif_sistema_ac = '-'
-      consumo_ac_real = '-'
+      consumo_ac_real = 0
+      consumo_ac_ref = 0
     }
 
 
@@ -975,6 +977,7 @@ function classificar(){
   if (geracao == NaN || geracao == ''){geracao = 0}
 
   var CEPreal = parseFloat(consumo_ac_real_conta)*1.6 + parseFloat(aq_real) + parseFloat(ilum_real)*1.6 + parseFloat(consumo_equipamentos*1.6) - parseFloat(geracao)*1.6
+  console.log(CEPreal)
   var CEPref =  parseFloat(consumo_ac_ref_conta)*1.6 + parseFloat(aq_ref) + parseFloat(ilum_refD)*1.6 + parseFloat(consumo_equipamentos*1.6)
     //definir o tipo de sistema de apoio para selecionar o coeficiente de emissões de CO2 da parte térmica
     var tipo_apoio = document.getElementById('apoio_aq').value
@@ -1027,5 +1030,34 @@ function classificar(){
 
     ////////////// NA HORA DE VERIFICAR SE TUDO ESTÁ OK: PRECISA DE ENVOLTÓRIA?
     // SE FOR CONSUMOS ZERADOS OU NAN CLASSE ZERO
-
+    if (classificacao_ed == 'erro'){
+      window.alert('Existe algum erro na compilação do consumo total da edificação, verifique o preenchimento de todos os sistemas')
+      document.getElementById('consumo_geral').innerHTML = '- kWh/ano' 
+      document.getElementById('img_geral').src = 'img/classZero.svg'
+      document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: - %'
+      document.getElementById('classe_sem_geracao').innerHTML = '-'
+      document.getElementById('reducao_total').innerHTML = '-'
+    }
+    console.log(classificacao_ed_sem)
+    if (classificacao_ed_sem == 'Zero' || classificacao_ed_sem == 'erro'){
+      document.getElementById('classe_sem_geracao').innerHTML = '-'
+    }
+    
+    else{
+      document.getElementById('consumo_geral').innerHTML = Math.round(CEPreal) + ' kWh/ano' 
+      document.getElementById('img_geral').src = 'img/class'+classificacao_ed+'.svg'
+      document.getElementById('reducao_geral').innerHTML = 'Redução em relação à condição de referência: '+ Math.round(REDCEP_geral)+' %'
+      document.getElementById('reducao_total').innerHTML = Math.round(REDCEP_geral)
+      document.getElementById('classe_sem_geracao').innerHTML = classificacao_ed_sem
+      document.getElementById('consumo_total_ref').innerHTML = Math.round(CEPref)
+      document.getElementById('consumo_total_real').innerHTML = Math.round(CEPreal)
+      document.getElementById('reducao_total').innerHTML = Number(REDCEP_geral).toFixed(2);
+      document.getElementById('emissoes_real').innerHTML = Number(emissao_real/1000).toFixed(2); // divide por 1000 para indicar tonelada
+      document.getElementById('emissoes_ref').innerHTML = Number(emissao_ref/1000).toFixed(2); // divide por 1000 para indicar tonelada
+      document.getElementById('reducao_emissoes').innerHTML = Number(red_emissoes).toFixed(2); // divide por 1000 para indicar tonelada
+    }
+    
+    document.getElementById('area_resumo').innerHTML = document.getElementById('area_construida').value;
+    document.getElementById('nome_ed').innerHTML = document.getElementById('nome_projeto').value;
+  
 }

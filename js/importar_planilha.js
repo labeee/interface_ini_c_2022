@@ -295,30 +295,23 @@ function GetTableFromExcel(data) {
 
 
                 //fazer condicional para 26 linhas e afins (quando não houver os preenchimentos)(verificar o que é interna, PAZ 0 e reposicionar as linhas)
-                index_linha = linha.slice(0,1)
-                linha = linha.slice(1,-2) // remove o primeiro valor, que é o índice, e os dois últimos, de preenchimento opcional
                 
-                if ((linha.length < 21 && linha.length > 4)){ //2 é o número mínimo de caracteres capturados se estiver tudo em branco, pois há 2 campos com fórmulas (dpi e dpe), 20 é o número de valores preenchidos se tudo estiver correto
+                index_linha = linha.slice(0,1)
+                linha = linha.slice(1,-3) // remove o primeiro valor, que é o índice, e os dois últimos, de preenchimento opcional
+                if ((linha.length < 25 && linha.length > 4)){ //2 é o número mínimo de caracteres capturados se estiver tudo em branco, pois há 2 campos com fórmulas (dpi e dpe), 20 é o número de valores preenchidos se tudo estiver correto
                     if (numero == undefined){numero = ''}
                     var numero =  numero + ' ' + String(index_linha)
-                    
                 }
-   
-                else if (linha.length == 4){} // se não houver nada preenchido ignora
+                else if (linha.length == 3){} // se não houver nada preenchido ignora
                 else {
+
                     //indice_linha = excelRows.indexOf(linha)
                     indice_linha = $('#myTable tr').length;
                     indice_linha = indice_linha - 1 
                     var row = table.insertRow(indice_linha+1); //aqui seria + o que já existe para apenas adicionar
                     row.id = 'zona'+indice_linha
                     //fazer ifs confome o tamanho da linha dentro do else
-                    if (linha.length == 25 && linha[5] == 'Interna'){
-                        var ss = linha;
-                        // splice(position, numberOfItemsToRemove, item)
-                        ss.splice(2, 0, "three");
-                        console.log(ss);
-                    }
-
+                    
                     var cell1= row.insertCell(0);
                     var cell2= row.insertCell(1);
                     var cell3= row.insertCell(2);
