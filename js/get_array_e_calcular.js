@@ -535,7 +535,7 @@ async function calcular(){
 
                 try {
                 //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-                const secao =  await ort.InferenceSession.create('/v4_ann_cool_0.99693_25.34_5.58.onnx');
+                const secao =  await ort.InferenceSession.create('v4_ann_cool_0.99693_25.34_5.58.onnx');
                 
                 secao['handler']['inputNames'][0] = 'entradas'
                 secao['handler']['outputNames'][0] = 'saidas'
