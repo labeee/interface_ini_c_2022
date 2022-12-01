@@ -298,11 +298,12 @@ function GetTableFromExcel(data) {
                 
                 index_linha = linha.slice(0,1)
                 linha = linha.slice(1,-3) // remove o primeiro valor, que é o índice, e os dois últimos, de preenchimento opcional
+                if (linha.length < 3){console.log(linha)}
                 if ((linha.length < 25 && linha.length > 4)){ //2 é o número mínimo de caracteres capturados se estiver tudo em branco, pois há 2 campos com fórmulas (dpi e dpe), 20 é o número de valores preenchidos se tudo estiver correto
                     if (numero == undefined){numero = ''}
                     var numero =  numero + ' ' + String(index_linha)
                 }
-                else if (linha.length == 3){} // se não houver nada preenchido ignora
+                else if (linha.length <= 3){} // se não houver nada preenchido ignora
                 else {
 
                     //indice_linha = excelRows.indexOf(linha)

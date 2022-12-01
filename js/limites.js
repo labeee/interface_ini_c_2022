@@ -75,7 +75,9 @@ function adicionar_limites(){
         //travar vidros para PAF 0
         document.getElementById('paf_zona'+linha).onchange = function(){
           var numero = (this.id).slice(8,) //numero da linha
-          if (this.value == 0) {                               
+          console.log(11)
+          if (this.value == 0) {                           
+              console.log('oi')    
               document.getElementById('lista_vidros'+numero).value = '';
               document.getElementById('lista_vidros'+numero).style.background = '#F5F5F5';
               document.getElementById('lista_vidros'+numero).disabled = true;
