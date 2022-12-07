@@ -174,8 +174,18 @@ async function calcular(){
                 lista_azimutes[idx] = 1
         
                 var [app_ori_360, app_ori_0, app_ori_45, app_ori_90, app_ori_135 , app_ori_180 , app_ori_225, app_ori_270,  app_ori_315] = lista_azimutes
-                //condicionais se a zona for interna 
 
+
+                //condição de exposição da cobertura
+                var info_pav = condicoes_pav.filter(pav => pav.nome == array[entradas.indexOf('lista_pavimentos')])[0]
+                var is_1pvto_0 = info_pav.is_1pvto_0
+                var is_1pvto_1 = info_pav.is_1pvto_1
+                var floor_exp_0 = info_pav.floor_exp_0
+                var floor_exp_1 = info_pav.floor_exp_1
+                var roof_exp_0 = info_pav.roof_exp_0
+                var roof_exp_1 = info_pav.roof_exp_1
+
+                //condicionais se a zona for interna 
                 if (array[entradas.indexOf('tipo_zona')] == 'Interna'){ //is_perimetral_0
                     var is_perimentral_0 = 1
                     var is_perimetral_1 = 0
@@ -207,7 +217,7 @@ async function calcular(){
 
                     var xlen = (((2/4.5)*array[entradas.indexOf('area_zona')])+9)/2
                     //PAF
-                    var WWR = parseFloat(array[entradas.indexOf('paf_zona')])/100
+                    var WWR = parseFloat(array[entradas.indexOf('paf_zona')])
 
                     //dados dos vidros
                     dados_vidro = vidros.filter(vidro => vidro.nome ==  array[entradas.indexOf('lista_vidros')])[0];
@@ -242,7 +252,7 @@ async function calcular(){
                         }
                         else{
                             var uvid_az = dados_vidro_az.u_vid;
-                            var FS_az = dados_vidro.fs_vid;
+                            var FS_az = dados_vidro_az.fs_vid;
                             var uvid_az_ref = 5.7
                             var FS_az_ref = 0.82
                             //abertura zenital
@@ -306,14 +316,7 @@ async function calcular(){
                     var ct_piso_ref = 0
                 }*/            
 
-                //condição de exposição da cobertura
-                var info_pav = condicoes_pav.filter(pav => pav.nome == array[entradas.indexOf('lista_pavimentos')])[0]
-                var is_1pvto_0 = info_pav.is_1pvto_0
-                var is_1pvto_1 = info_pav.is_1pvto_1
-                var floor_exp_0 = info_pav.floor_exp_0
-                var floor_exp_1 = info_pav.floor_exp_1
-                var roof_exp_0 = info_pav.roof_exp_0
-                var roof_exp_1 = info_pav.roof_exp_1
+
 
                 // dados da cobertura 
                 var dados_cobertura = coberturas.filter(cob =>cob.nome == array[entradas.indexOf('lista_coberturas')])[0]
@@ -538,7 +541,7 @@ async function calcular(){
 
                 try {
                 //const secao = await ort.InferenceSession.create('./PHFFT_Calor.onnx');
-                const secao =  await ort.InferenceSession.create('v4_ann_cool_0.99693_25.34_5.58.onnx');
+                const secao =  await ort.InferenceSession.create('/v4_ann_cool_0.99693_25.34_5.58.onnx');
                 
                 secao['handler']['inputNames'][0] = 'entradas'
                 secao['handler']['outputNames'][0] = 'saidas'
