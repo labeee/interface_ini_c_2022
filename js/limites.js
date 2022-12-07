@@ -1,6 +1,4 @@
 
-
-
 //para os valores da tabela da envoltoria
 const inputEnabler = (e) => {
     let val = parseFloat(e.target.value);

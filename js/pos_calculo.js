@@ -1,4 +1,4 @@
-function teste (){
+function pos_calculo (){
 
     var rowCount = ($('#myTable tr').length)-1; //-1 pois desconsidera a primeira linha, que é cabeçalho
     for (var linha = 0; linha < rowCount; linha++) {
@@ -17,4 +17,5 @@ function teste (){
             }
         }
     } 
+    adicionar_limites();
 }
