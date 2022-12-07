@@ -1,25 +1,25 @@
 //Aqui foi inserida a lista de usos da zona e suas características padrão
 var uso_zonas = [
 //escritórios    
-{'nome':'Escritórios','dpi_ref':14.1,'dpe_ref':15,'densidade_ocupacao':0.1,'horas_ocupacao':10,'dias_ocupacao':260, 'paf_ref': 0.5, 'sch': 10},
+{'nome':'Escritórios','dpi_ref':14.1,'dpe_ref':15,'densidade_ocupacao':0.1,'horas_ocupacao':10,'dias_ocupacao':260, 'paf_ref': 50, 'sch': 10},
 //educacional infantil
-{'nome':'Educacional - Infantil','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.4,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 0.4, 'sch': 8},
+{'nome':'Educacional - Infantil','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.4,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 40, 'sch': 8},
 //educacional medio
-{'nome':'Educacional - Fundamental e médio','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.667,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 0.4, 'sch': 8},
+{'nome':'Educacional - Fundamental e médio','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.667,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 40, 'sch': 8},
 //educacional superior
-{'nome':'Educacional - Superior','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.667,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 0.4, 'sch': 8},
+{'nome':'Educacional - Superior','dpi_ref':15.5,'dpe_ref':15,'densidade_ocupacao':0.667,'horas_ocupacao':8,'dias_ocupacao':200, 'paf_ref': 40, 'sch': 8},
 //hospedagem
-{'nome':'Hospedagem','dpi_ref':15.7,'dpe_ref':20,'densidade_ocupacao':0.056,'horas_ocupacao':14.4,'dias_ocupacao':365, 'paf_ref': 0.4, 'sch': 24},
+{'nome':'Hospedagem','dpi_ref':15.7,'dpe_ref':20,'densidade_ocupacao':0.056,'horas_ocupacao':14.4,'dias_ocupacao':365, 'paf_ref': 40, 'sch': 24},
 //EAS (saúde)
-{'nome':'Est. Assist. de Saúde','dpi_ref':15,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':365, 'paf_ref': 0.14, 'sch': 12},
+{'nome':'Est. Assist. de Saúde','dpi_ref':15,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':365, 'paf_ref': 14, 'sch': 12},
 //Varejo comércio
-{'nome':'Varejo - Comércio','dpi_ref':20,'dpe_ref':20,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':300, 'paf_ref_principal': 0.6, 'paf_ref': 0.05, 'sch': 12},
+{'nome':'Varejo - Comércio','dpi_ref':20,'dpe_ref':20,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':300, 'paf_ref_principal': 60, 'paf_ref': 5, 'sch': 12},
 //Varejo mercados
-{'nome':'Varejo - Mercados','dpi_ref':16.3,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':350, 'paf_ref_principal': 0.6, 'paf_ref': 0.05, 'sch': 12},
+{'nome':'Varejo - Mercados','dpi_ref':16.3,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':350, 'paf_ref_principal': 60, 'paf_ref': 10, 'sch': 12},
 //restaurantes
-{'nome':'Restaurantes','dpi_ref':13.9,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':8,'dias_ocupacao':350, 'paf_ref': 0.4, 'sch': 8},
+{'nome':'Restaurantes','dpi_ref':13.9,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':8,'dias_ocupacao':350, 'paf_ref': 40, 'sch': 8},
 //outras
-{'nome':'Outras','dpi_ref':15,'dpe_ref':40,'densidade_ocupacao':0.2,'horas_ocupacao':12,'dias_ocupacao':300, 'paf_ref': 0.6, 'sch': 12}]
+{'nome':'Outras','dpi_ref':15,'dpe_ref':40,'densidade_ocupacao':0.1,'horas_ocupacao':12,'dias_ocupacao':300, 'paf_ref': 60, 'sch': 12}]
 
 
 var condicoes_pav = [{'nome': 'Subsolo', 'is_1pvto_0': 1, 'is_1pvto_1': 0, 'floor_exp_0': 1, 'floor_exp_1':0, 'roof_exp_0':1, 'roof_exp_1':0},
