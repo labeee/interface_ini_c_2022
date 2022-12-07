@@ -20,6 +20,7 @@ const inputEnabler = (e) => {
 }
 
 function adicionar_limites(){
+    console.log('limites adicionados')
     entradas_com_limites = ['area_zona', 'pd_zona', 'paf_zona', 'avs_zona', 'ahs_zona', 'aov_zona', 'dpi_zona', 'paz_zona']
 
     var rowCount = ($('#myTable tr').length)-1; //-1 pois desconsidera a primeira linha, que é cabeçalho
@@ -75,9 +76,8 @@ function adicionar_limites(){
         //travar vidros para PAF 0
         document.getElementById('paf_zona'+linha).onchange = function(){
           var numero = (this.id).slice(8,) //numero da linha
-          console.log(11)
-          if (this.value == 0) {                           
-              console.log('oi')    
+          console.log('aqui')
+          if (this.value == 0) {          
               document.getElementById('lista_vidros'+numero).value = '';
               document.getElementById('lista_vidros'+numero).style.background = '#F5F5F5';
               document.getElementById('lista_vidros'+numero).disabled = true;

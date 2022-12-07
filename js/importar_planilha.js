@@ -298,7 +298,6 @@ function GetTableFromExcel(data) {
                 
                 index_linha = linha.slice(0,1)
                 linha = linha.slice(1,-3) // remove o primeiro valor, que é o índice, e os dois últimos, de preenchimento opcional
-                if (linha.length < 3){console.log(linha)}
                 if ((linha.length < 25 && linha.length > 4)){ //2 é o número mínimo de caracteres capturados se estiver tudo em branco, pois há 2 campos com fórmulas (dpi e dpe), 20 é o número de valores preenchidos se tudo estiver correto
                     if (numero == undefined){numero = ''}
                     var numero =  numero + ' ' + String(index_linha)
@@ -558,7 +557,7 @@ function GetTableFromExcel(data) {
             else {window.alert('Planilha importada com sucesso!')}
         }
     }
-    adicionar_limites() //depois de adicionada a planilha, adiciona os limites 
+    adicionar_limites() //depois de adicionada a planilha, adiciona os limites
 }
 
 //importar lista de materiais e injetar nos que ali existem 
@@ -574,4 +573,5 @@ function atualizar(){
         };
         reader.readAsBinaryString(fileUpload.files[0]);
         document.querySelector('#fileUpload').value = null;
+         
     }
