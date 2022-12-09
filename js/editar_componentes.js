@@ -353,9 +353,9 @@ function atualizar_pisos(){
             array_pisos.push(piso.options[j].innerText)
         }
         piso.innerHTML = "";
-        pisos.forEach(piso =>{
+        pisos.forEach(pis =>{
         var optionInc = document.createElement("OPTION");
-        optionInc.innerHTML = piso.nome;
+        optionInc.innerHTML = pis.nome;
         piso.appendChild(optionInc);
         });
         

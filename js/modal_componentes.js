@@ -98,7 +98,7 @@ function add_parede_externa(){
 		var rowCount = rowCount - 1
 		for (var i = 0; i < rowCount; i++) {
 		var selparedes = document.getElementById("lista_paredes_ext"+(i));
-		parede_a_adicionar = paredes_externas[paredes.length - 1];
+		parede_a_adicionar = paredes_externas[paredes_externas.length - 1];
 		var optionInc = document.createElement("OPTION");
 		optionInc.innerHTML = parede_a_adicionar.nome;
 		selparedes.appendChild(optionInc);
@@ -128,7 +128,7 @@ function add_parede_interna(){
 		var rowCount = rowCount - 1
 		for (var i = 0; i < rowCount; i++) {
 		var selparedes = document.getElementById("lista_paredes_int"+(i));
-		parede_a_adicionar = paredes_internas[paredes.length - 1];
+		parede_a_adicionar = paredes_internas[paredes_internas.length - 1];
 		var optionInc = document.createElement("OPTION");
 		optionInc.innerHTML = parede_a_adicionar.nome;
 		selparedes.appendChild(optionInc);
