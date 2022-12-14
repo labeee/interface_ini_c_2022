@@ -78,7 +78,7 @@ function inserir_tabela() {
     cell12.innerHTML = '<select id="lista_pisos'+(rowCount)+'"></select>'
     cell13.innerHTML = '<select id="lista_vidros'+(rowCount)+'"></select>'
     cell14.innerHTML = '<input id="paf_zona' +(rowCount)+'" type="number" min="0" step="0.01" max="90">';
-    cell15.innerHTML = '<select style="background-color:#F5F5F5" disabled id="fachada'+rowCount+'"><option value="Sim">Sim</option><option value="Não">Não</option></select>';
+    cell15.innerHTML = '<select style="background-color:#F5F5F5" disabled id="fachada'+rowCount+'"><option value="Não">Não</option><option value="Sim">Sim</option></select>';
     cell16.innerHTML = '<input id="avs_zona'+(rowCount)+'" type="number" min="0" step="0.01" max="90">';
     cell17.innerHTML = '<input id="ahs_zona'+(rowCount)+'" type="number" min="0" step="0.01" max="90">';
     cell18.innerHTML = '<input id="aov_zona'+(rowCount)+'" type="number" min="0" step="0.01" max="90">';
